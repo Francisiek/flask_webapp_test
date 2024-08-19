@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    {% if title %}
+    <title>{{ page_title }} - MyBlog</title>
+    {% else %}
+    <title>MyBlog</title>
+    {% endif %}
+</head>
+
+<body>
+    <div id="navbar">
+        <b>Bloggg</b> <a href="{{ url_for('index_page') }}">Home</a> <a href="{{ url_for('login_page') }}">Login</a>
+    </div>
+    {% with flashed_messages = get_flashed_messages() %}
+    {% if flashed_messages %}
+    <ul>
+        {% for message in flashed_messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %} {% endblock %}
+</body>
+</html>
