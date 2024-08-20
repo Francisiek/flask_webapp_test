@@ -7,12 +7,14 @@ from webapp import db, login
 
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from hashlib import md5
 class User(UserMixin, db.Model):
     id:         SO.Mapped[int] = SO.mapped_column(primary_key=True)
     username:   SO.Mapped[str] = SO.mapped_column(SA.String(64), index=True, unique=True)
     email:      SO.Mapped[str] = SO.mapped_column(SA.String(128), index=True, unique=True)
     hashed_pass:SO.Mapped[Optional[str]] = SO.mapped_column(SA.String(256))
-
+    about:      SO.Mapped[Optional[str]] = SO.mapped_column(SA.String(4096))
+    last_seen:  SO.Mapped[Optional[datetime]] = SO.mapped_column(default=lambda: datetime.now(timezone.utc))
     posts:      SO.WriteOnlyMapped['Post'] = SO.relationship(back_populates='author')
 
 
@@ -22,6 +24,9 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.hashed_pass, password)
 
+    def avatar(self, size):
+        hash = md5((self.username+self.email+str(2384129234)).encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{hash}?d=identicon&s={size}'
     def __repr__(self):
         return f'<User {self.username}>'
 

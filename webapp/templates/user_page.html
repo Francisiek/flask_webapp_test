@@ -1,14 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ user.username }}</h1>
-<br>
-<p>Contact info: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+<table>
+    <tr valign="top">
+        <td><img src="{{ user.avatar(128) }}"></td>
+        <td>
+            <h1>{{ user.username }}</h1>
+            <br>
+            Contact info: <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+        </td>
+    </tr>
+    <tr>
+        {% if user.last_seen %}
+        <td>
+            <p><b>Last seen on: </b>{{ user.last_seen }}</p>
+        </td>
+        {% endif %}
+        
+        {% if user.about %}
+        <td>
+            <p><b>About: </b>{{ user.about }}</p>
+        </td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>
+        {% if user.id == current_user.id %}
+            <a href="{{ url_for('edit_profile_page') }}">Edit your profile</a>
+        {% endif %}
+        </td>
+    </tr>
+</table>
+
 <h2>Posts</h2>
 
 {% for post in posts %}
-<p><b>{{ post.title }}</b></p>
-<p>{{ post.body }}</p>
+    {% include "sub_post.html" %}
 {% endfor %}
 
 {% endblock %}

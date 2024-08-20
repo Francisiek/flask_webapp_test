@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -41,3 +41,8 @@ class SearchUserForm(FlaskForm):
         
         if not search:
             raise ValidationError('No such user')
+        
+class EditProfileForm(FlaskForm):
+    about = TextAreaField('About you', validators=[Length(min=0, max=4095)])
+    submit = SubmitField('Update it')
+

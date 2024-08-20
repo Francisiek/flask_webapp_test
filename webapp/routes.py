@@ -1,12 +1,20 @@
 from webapp import app, db
 from flask import render_template, url_for
-from webapp.forms import LoginForm, RegistrationForm, SearchUserForm
+from webapp.forms import LoginForm, RegistrationForm, SearchUserForm, EditProfileForm
 from flask import flash, redirect, request
 from urllib.parse import urlsplit
 
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sqa
 from webapp.models import User
+
+
+from datetime import datetime, timezone
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc)
+        db.session.commit()
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index', methods=['POST', 'GET'])
@@ -89,8 +97,24 @@ def user_page(username):
     user = db.first_or_404(sqa.select(User).where(username == User.username))
 
     posts = [
-        {'author': user, 'body': 'My post heeeee'},
-        {'author': user, 'body': 'My post niuuuuuu'},
+        {'author': user, 'title': 'My ugly day', 'body': 'My post heeeee'},
+        {'author': user, 'title': 'Oh my duck', 'body': 'My post niuuuuuu'},
     ]
 
     return render_template('user_page.html', title=f'User {username}', user=user, posts=posts)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+def edit_profile_page():
+    if current_user.is_anonymous:
+        return redirect(url_for('index_page'))
+
+    form = EditProfileForm()
+    if form.validate_on_submit():
+        current_user.about = form.about.data
+        db.session.commit()
+        flash('Succesfully updated profile.')
+        return redirect(url_for('user_page', username=current_user.username))
+    elif request.method == 'GET':
+        form.about.data = current_user.about
+    
+    return render_template('edit_profile_page.html', title='Edit profile', form=form)
