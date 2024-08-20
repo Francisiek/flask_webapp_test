@@ -2,9 +2,12 @@ from typing import Optional
 from datetime import datetime, timezone
 import sqlalchemy as SA
 import sqlalchemy.orm as SO
-from webapp import db
+from webapp import db, login
 
-class User(db.Model):
+
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+class User(UserMixin, db.Model):
     id:         SO.Mapped[int] = SO.mapped_column(primary_key=True)
     username:   SO.Mapped[str] = SO.mapped_column(SA.String(64), index=True, unique=True)
     email:      SO.Mapped[str] = SO.mapped_column(SA.String(128), index=True, unique=True)
@@ -12,9 +15,20 @@ class User(db.Model):
 
     posts:      SO.WriteOnlyMapped['Post'] = SO.relationship(back_populates='author')
 
+
+    def set_password(self, password):
+        self.hashed_pass = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.hashed_pass, password)
+
     def __repr__(self):
         return f'<User {self.username}>'
-    
+
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))
+
 class Post(db.Model):
     id:         SO.Mapped[int] = SO.mapped_column(primary_key=True)
     user_id:    SO.Mapped[int] = SO.mapped_column(SA.ForeignKey(User.id), index=True)

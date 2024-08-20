@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ user.username }}</h1>
+<br>
+<p>Contact info: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+<h2>Posts</h2>
+
+{% for post in posts %}
+<p><b>{{ post.title }}</b></p>
+<p>{{ post.body }}</p>
+{% endfor %}
+
+{% endblock %}

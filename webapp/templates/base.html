@@ -11,7 +11,28 @@
 
 <body>
     <div id="navbar">
-        <b>Bloggg</b> <a href="{{ url_for('index_page') }}">Home</a> <a href="{{ url_for('login_page') }}">Login</a>
+        <div style="text-align: left;">
+            <b>Bloggg</b> <a href="{{ url_for('index_page') }}">Home</a>
+            {% if search_user_form %}
+            Go to profile: 
+                <form action="" method="post" novalidate>
+                    {{ search_user_form.hidden_tag() }}
+                    {{ search_user_form.username.label }} {{ search_user_form.username(size=32) }}
+                    {% for error in search_user_form.username.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                    {{ search_user_form.submit() }}
+                </form>
+            {% endif %}
+        </div>
+        <div style="text-align: right;">
+            {% if current_user.is_anonymous %}
+                <a href="{{ url_for('login_page') }}">Login</a> <a href="{{ url_for('registration_page') }}">Register</a>
+            {% else %}
+                Hi <b>{{ current_user.username }}</b>! <a href="{{ url_for('logout_page') }}">Logout</a>
+                <a href="{{ url_for('user_page', username=current_user.username) }}">Profile page</a>
+            {% endif %}
+        </div>
     </div>
     {% with flashed_messages = get_flashed_messages() %}
     {% if flashed_messages %}

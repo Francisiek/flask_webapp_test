@@ -1,9 +1,16 @@
-from webapp import app
+from webapp import app, db
 from flask import render_template, url_for
-from webapp.forms import LoginForm
+from webapp.forms import LoginForm, RegistrationForm, SearchUserForm
+from flask import flash, redirect, request
+from urllib.parse import urlsplit
 
-@app.route('/')
-@app.route('/index')
+from flask_login import current_user, login_user, logout_user, login_required
+import sqlalchemy as sqa
+from webapp.models import User
+
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/index', methods=['POST', 'GET'])
+#@login_required
 def index_page():
     mock_user = {'username': 'Garry'}
     mock_posts = [
@@ -20,17 +27,70 @@ def index_page():
             'body': 'No way this could work'
         }
     ]
+    search_user_form = SearchUserForm()
 
-    return render_template('index_page.html', title='Test page', user=mock_user, posts=mock_posts)
+    if search_user_form.validate_on_submit():
+        #flash('Yey')
+        return redirect(url_for('user_page', username=search_user_form.username.data))
 
-from flask import flash, redirect
+    return render_template('index_page.html', title='Test page', posts=mock_posts, search_user_form=search_user_form)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
+    if current_user.is_authenticated:
+        return redirect(url_for('index_page'))
+
     form = LoginForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(sqa.select(User).where(form.username.data == User.username))
+
+        if user == None or user.check_password(form.password.data) == False:
+            flash('Invalid username or password')
+            return redirect(url_for('login_page'))
+        else:
+            login_user(user, remember=form.remember_me.data)
+            next_page = request.args.get('next')
+
+            if not next_page or urlsplit(next_page).netloc != '':
+                next_page = url_for('index_page')
+
+            return redirect(next_page)
+
+    return render_template('login_page.html', title='Login', form=form)
+    
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    return redirect(url_for('index_page'))
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration_page():
+    if current_user.is_authenticated:
+        return redirect(url_for('index_page'))
+    
+    form = RegistrationForm()
 
     if form.validate_on_submit():
-        flash(f"User {form.username.data} with setting remember me={form.remember_me.data}")
-        return redirect(url_for('index_page'))
-    else:
-        return render_template('login_page.html', title='Login', form=form)
+        new_user = User(username=form.username.data, email=form.email.data)
+        new_user.set_password(form.password.data)
+
+        db.session.add(new_user)
+        db.session.commit() 
+
+        flash('Congrats! You can now log in.')
+        return redirect(url_for('login_page'))
+
+    return render_template('registration_page.html', title='Register', form=form)
+
+@app.route('/user/<username>')
+#@login_required
+def user_page(username):
+    user = db.first_or_404(sqa.select(User).where(username == User.username))
+
+    posts = [
+        {'author': user, 'body': 'My post heeeee'},
+        {'author': user, 'body': 'My post niuuuuuu'},
+    ]
+
+    return render_template('user_page.html', title=f'User {username}', user=user, posts=posts)
