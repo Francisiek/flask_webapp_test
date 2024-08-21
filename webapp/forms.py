@@ -33,7 +33,7 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already registered')
 
 class SearchUserForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
+    username = StringField('Username')
     submit = SubmitField('Search')
 
     def validate_username(self, username):
@@ -46,3 +46,10 @@ class EditProfileForm(FlaskForm):
     about = TextAreaField('About you', validators=[Length(min=0, max=4095)])
     submit = SubmitField('Update it')
 
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
+
+class PostForm(FlaskForm):
+    title = StringField('Title: ', validators=[Length(min=1, max=64)])
+    text = TextAreaField('Write: ', validators=[Length(min=1, max=1024)])
+    submit = SubmitField('Post it!')

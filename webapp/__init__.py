@@ -11,4 +11,18 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login_page'
 
-from webapp import routes, models
+from webapp import routes, models, errors
+
+import logging
+from logging.handlers import RotatingFileHandler
+import os
+
+if not app.debug:
+    if not os.path.exists('logs'):
+        os.mkdir('logs')
+    file_handler = RotatingFileHandler('logs/blog.log', maxBytes=16384, backupCount=16)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s:\n %(message)s in %(pathname)s:%(lineno)d'))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('Starting up...')

@@ -1,11 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% for post in posts %}
-    <div>
+    {% if post_form %}
+    <form action="" method="post" novalidate>
+        {{ post_form.hidden_tag() }}
+        
         <p>
-            <b>{{ post.author['username'] }}</b>: {{ post.body }}
+            {{ post_form.title.label }}
+            <br>
+            {{ post_form.title(size=64) }}
+            <br>
+            {{ post_form.text.label }}
+            <br>
+            {{ post_form.text(cols=32, rows=8) }}
+            
+            {% for error in post_form.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
         </p>
-    </div>
+
+        {{ post_form.submit() }}
+    </form>
+    {% endif %}
+
+    {% for post in posts %}
+        {% include "sub_post.html" %}
     {% endfor %}
+
+    {% if prev_url %}
+        <a href="{{ prev_url }}">Previous page</a>
+    {% endif %}
+    {% if next_url %}
+        <a href="{{ next_url }}">Next page</a>
+    {% endif %}
+    
 {% endblock %}

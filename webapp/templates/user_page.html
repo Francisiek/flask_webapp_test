@@ -24,10 +24,36 @@
         {% endif %}
     </tr>
     <tr>
+        {% if user == current_user %}
         <td>
-        {% if user.id == current_user.id %}
             <a href="{{ url_for('edit_profile_page') }}">Edit your profile</a>
+        </td>
         {% endif %}
+
+        {% if current_user.is_authenticated and user != current_user %}
+        <td>
+            {% if not current_user.is_following(user) %}
+            <form action="{{ url_for('follow_user', username=user.username) }}" 
+                method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Follow') }}
+            </form>
+            {% else %}
+            <form action="{{ url_for('unfollow_user', username=user.username) }}" 
+                method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.submit(value='Unfollow') }}
+            </form>
+            {% endif %}
+        </td>
+        {% endif %}
+    </tr>
+    <tr>
+        <td>
+            <b>Followers:</b> {{ user.followers_counter() }}
+        </td>
+        <td>
+            <b>Following:</b> {{ user.following_counter() }}
         </td>
     </tr>
 </table>
@@ -37,5 +63,12 @@
 {% for post in posts %}
     {% include "sub_post.html" %}
 {% endfor %}
+
+{% if prev_url %}
+    <a href="{{ prev_url }}">Previous page</a>
+{% endif %}
+{% if next_url %}
+    <a href="{{ next_url }}">Next page</a>
+{% endif %}
 
 {% endblock %}

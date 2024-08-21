@@ -1,12 +1,12 @@
 from webapp import app, db
 from flask import render_template, url_for
-from webapp.forms import LoginForm, RegistrationForm, SearchUserForm, EditProfileForm
+from webapp.forms import LoginForm, RegistrationForm, SearchUserForm, EditProfileForm, EmptyForm, PostForm
 from flask import flash, redirect, request
 from urllib.parse import urlsplit
 
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sqa
-from webapp.models import User
+from webapp.models import User, Post
 
 
 from datetime import datetime, timezone
@@ -18,31 +18,40 @@ def before_request():
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index', methods=['POST', 'GET'])
-#@login_required
 def index_page():
-    mock_user = {'username': 'Garry'}
-    mock_posts = [
-        {
-            'author': {'username': 'David'},
-            'body': 'What a shit?'
-        },
-        {
-            'author': {'username': 'David'},
-            'body': 'Ojjjj taaak!'
-        },
-        {
-            'author': {'username': 'Garry'},
-            'body': 'No way this could work'
-        }
-    ]
-    search_user_form = SearchUserForm()
-
+    
+    # search_user_form = SearchUserForm()
+    """ 
     if search_user_form.validate_on_submit():
-        #flash('Yey')
         return redirect(url_for('user_page', username=search_user_form.username.data))
+    """
+    
+    page = request.args.get('page', 1, type=int)
+    query = None
+    post_form = None
 
-    return render_template('index_page.html', title='Test page', posts=mock_posts, search_user_form=search_user_form)
+    if current_user.is_authenticated:
+        post_form = PostForm()
 
+        if post_form.validate_on_submit():
+            new_post = Post(title=post_form.title.data, body=post_form.text.data, author=current_user)
+            db.session.add(new_post)
+            db.session.commit()
+            flash('Uploaded your post.')
+            return redirect(url_for('index_page'))
+        
+        query = current_user.get_my_and_followers_posts_query()
+    else:
+        query = sqa.select(Post).order_by(Post.timestamp.desc())
+
+    posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+
+    next_url = url_for('index_page', page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('index_page', page=posts.prev_num) if posts.has_prev else None
+
+
+    return render_template('index_page.html', title='Home page', 
+                    posts=posts, post_form=post_form, next_url=next_url, prev_url=prev_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
@@ -92,18 +101,25 @@ def registration_page():
     return render_template('registration_page.html', title='Register', form=form)
 
 @app.route('/user/<username>')
-#@login_required
+@login_required
 def user_page(username):
     user = db.first_or_404(sqa.select(User).where(username == User.username))
 
-    posts = [
-        {'author': user, 'title': 'My ugly day', 'body': 'My post heeeee'},
-        {'author': user, 'title': 'Oh my duck', 'body': 'My post niuuuuuu'},
-    ]
+    form = EmptyForm()
 
-    return render_template('user_page.html', title=f'User {username}', user=user, posts=posts)
+    page = request.args.get('page', 1, type=int)
+    
+    query = user.get_posts_query()
+    posts = db.paginate(query, page=page, per_page=app.config['POSTS_PER_PAGE'], error_out=False)
+
+    next_url = url_for('user_page', username=username, page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('user_page', username=username, page=posts.prev_num) if posts.has_prev else None
+
+    return render_template('user_page.html', title=f'User {username}', 
+                           user=user, form=form, posts=posts, next_url=next_url, prev_url=prev_url)
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
 def edit_profile_page():
     if current_user.is_anonymous:
         return redirect(url_for('index_page'))
@@ -118,3 +134,51 @@ def edit_profile_page():
         form.about.data = current_user.about
     
     return render_template('edit_profile_page.html', title='Edit profile', form=form)
+
+@app.route('/follow/<username>', methods=['POST'])
+@login_required
+def follow_user(username):
+    form = EmptyForm()
+
+    if form.validate_on_submit():
+        user = db.session.scalar(sqa.select(User).where(User.username == username))
+
+        if user is None:
+            flash(f'User {username} not found.')
+            return redirect(url_for('index_page'))
+        elif user == current_user:
+            flash(f'You can\'t follow yourself!')
+            return redirect(url_for('index_page'))
+        
+        current_user.follow(user)
+        db.session.commit()
+        flash(f'You are now following {username}.')
+        return redirect(url_for('user_page', username=username))
+    else:
+        return redirect(url_for('index_page'))
+
+@app.route('/unfollow/<username>', methods=['POST'])
+@login_required
+def unfollow_user(username):
+    form = EmptyForm()
+
+    if form.validate_on_submit():
+        user = db.session.scalar(sqa.select(User).where(User.username == username))
+
+        if user is None:
+            flash(f'User {username} not found.')
+            return redirect(url_for('index_page'))
+        elif user == current_user:
+            flash(f'You can\'t unfollow yourself!')
+            return redirect(url_for('index_page'))
+        
+        if current_user.is_following(user):
+            current_user.unfollow(user)
+            db.session.commit()
+            flash(f'You stopped following {username}.')
+            return redirect(url_for('user_page', username=username))
+        else:
+            flash(f'You are not following {username}.')
+            return redirect(url_for('user_page', username=username))
+    else:
+        return redirect(url_for('index_page'))
