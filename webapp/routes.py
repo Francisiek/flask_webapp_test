@@ -1,6 +1,8 @@
+from crypt import methods
+
 from webapp import app, db
 from flask import render_template, url_for
-from webapp.forms import LoginForm, RegistrationForm, SearchUserForm, EditProfileForm, EmptyForm, PostForm
+from webapp.forms import *
 from flask import flash, redirect, request
 from urllib.parse import urlsplit
 
@@ -49,7 +51,6 @@ def index_page():
     next_url = url_for('index_page', page=posts.next_num) if posts.has_next else None
     prev_url = url_for('index_page', page=posts.prev_num) if posts.has_prev else None
 
-
     return render_template('index_page.html', title='Home page', 
                     posts=posts, post_form=post_form, next_url=next_url, prev_url=prev_url)
 
@@ -80,6 +81,48 @@ def login_page():
 def logout_page():
     logout_user()
     return redirect(url_for('index_page'))
+
+from webapp.email import send_password_reset_email
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request_page():
+    if current_user.is_authenticated:
+        return redirect(url_for('index_page'))
+
+    form = PasswordResetRequestForm()
+
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sqa.select(User).where(User.email == form.email.data)
+        )
+        if user:
+            send_password_reset_email(user)
+
+        flash('Password request send to that email address.')
+        return redirect(url_for('login_page'))
+
+    return render_template('reset_password_request_page.html', title='Reset password', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password_page(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index_page'))
+
+    user = User.verify_password_reset_token(token)
+
+    if not user:
+        return redirect(url_for('index_page'))
+
+    form = PasswordResetForm()
+
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been successfully reset.')
+        return redirect(url_for('login_page'))
+
+    return render_template('reset_password_page.html', title='Reset password', form=form)
+
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration_page():

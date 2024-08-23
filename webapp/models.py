@@ -2,7 +2,7 @@ from typing import Optional
 from datetime import datetime, timezone
 import sqlalchemy as sqa
 import sqlalchemy.orm as sqo
-from webapp import db, login
+from webapp import db, login, app
 
 
 followers_table = sqa.Table('followers', db.metadata, 
@@ -14,6 +14,10 @@ followers_table = sqa.Table('followers', db.metadata,
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from hashlib import md5
+
+from time import time
+import jwt
+
 class User(UserMixin, db.Model):
     id:         sqo.Mapped[int] = sqo.mapped_column(primary_key=True)
     username:   sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True, unique=True)
@@ -39,6 +43,23 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.hashed_pass, password)
+
+    def get_reset_password_token(self, expires_in=app.config['PASSWORD_RESET_EXPIRE_TIME_SECONDS']):
+        token = jwt.encode(
+            {'user_id': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256'
+        )
+        return token
+
+    @staticmethod
+    def verify_password_reset_token(token):
+        try:
+            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['user_id']
+        except:
+            return None
+
+        return db.session.get(User, user_id)
+
 
     def avatar(self, size):
         hash = md5((self.username+self.email+str(2384129234)).encode('utf-8')).hexdigest()
