@@ -1,0 +1,5 @@
+{% macro submit_field(field, value) %}
+<div class="mb-3">
+    {{ field(class='btn btn-success', value=value) }}
+</div>
+{% endmacro %}

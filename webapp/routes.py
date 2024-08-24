@@ -1,7 +1,10 @@
+import os
 from crypt import methods
 
+from alembic.autogenerate import render_op_text
+
 from webapp import app, db
-from flask import render_template, url_for
+from flask import render_template, url_for, send_from_directory
 from webapp.forms import *
 from flask import flash, redirect, request
 from urllib.parse import urlsplit
@@ -17,6 +20,10 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
+
+@app.route('/bootstrap')
+def get_bootstrap():
+    return send_from_directory("templates/", "bootstrap.min.css")
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index', methods=['POST', 'GET'])

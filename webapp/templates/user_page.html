@@ -33,16 +33,16 @@
         {% if current_user.is_authenticated and user != current_user %}
         <td>
             {% if not current_user.is_following(user) %}
-            <form action="{{ url_for('follow_user', username=user.username) }}" 
+            <form action="{{ url_for('follow_user', username=user.username) }}"
                 method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value='Follow') }}
+                    {{ macro_submit.submit_field(form.submit, value='Follow') }}
             </form>
             {% else %}
             <form action="{{ url_for('unfollow_user', username=user.username) }}" 
                 method="post">
                     {{ form.hidden_tag() }}
-                    {{ form.submit(value='Unfollow') }}
+                    {{ macro_submit.submit_field(form.submit, value='Unfollow') }}
             </form>
             {% endif %}
         </td>
@@ -64,11 +64,6 @@
     {% include "sub_post.html" %}
 {% endfor %}
 
-{% if prev_url %}
-    <a href="{{ prev_url }}">Previous page</a>
-{% endif %}
-{% if next_url %}
-    <a href="{{ next_url }}">Next page</a>
-{% endif %}
+{% include "sub_pagination.html" %}
 
 {% endblock %}

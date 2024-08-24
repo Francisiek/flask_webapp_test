@@ -2,24 +2,14 @@
 
 {% block content %}
     {% if post_form %}
+    <h4>Write a post:</h4>
     <form action="" method="post" novalidate>
         {{ post_form.hidden_tag() }}
-        
-        <p>
-            {{ post_form.title.label }}
-            <br>
-            {{ post_form.title(size=64) }}
-            <br>
-            {{ post_form.text.label }}
-            <br>
-            {{ post_form.text(cols=32, rows=8) }}
-            
-            {% for error in post_form.errors %}
-                <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
 
-        {{ post_form.submit() }}
+        {{ macro_form.form_field(post_form.title, size=64) }}
+        {{ macro_form.form_field(post_form.text, size=64) }}
+
+        {{ macro_submit.submit_field(post_form.submit, value="Post it!") }}
     </form>
     {% endif %}
 

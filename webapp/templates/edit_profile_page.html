@@ -1,21 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit your profile</h1>
+    <h4>Edit your profile</h4>
 
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.about.label }}
-            <br>
-            {{ form.about(cols=32, rows=8) }}
 
-            {% for error in form.about.errors %}
-                <span style="color: red;">{{ error }}</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.submit() }}
-        </p>
+        {{ macro_form.form_field(form.about) }}
+        {{ macro_submit.submit_field(form.submit, value="Submit") }}
     </form>
 {% endblock %}
