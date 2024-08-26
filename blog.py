@@ -1,6 +1,6 @@
 import sqlalchemy as sqa
 import sqlalchemy.orm as sqo
-from webapp import app, db
+from webapp import app, db, cli
 from webapp.models import User, Post
 
 

@@ -6,18 +6,21 @@ from alembic.autogenerate import render_op_text
 from webapp import app, db
 from flask import render_template, url_for, send_from_directory
 from webapp.forms import *
-from flask import flash, redirect, request
+from flask import flash, redirect, request, g
 from urllib.parse import urlsplit
 
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sqa
 from webapp.models import User, Post
 
-from flask_babel import _
+from flask_babel import _, get_locale
 
 from datetime import datetime, timezone
 @app.before_request
 def before_request():
+
+    g.locale = str(get_locale())
+
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()

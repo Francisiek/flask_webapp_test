@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-26 13:07+0200\n"
+"POT-Creation-Date: 2024-08-26 14:26+0200\n"
 "PO-Revision-Date: 2024-08-26 12:49+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -95,54 +95,54 @@ msgstr "Napisz: "
 msgid "Post it!"
 msgstr "Wrzuć to!"
 
-#: webapp/routes.py:50
+#: webapp/routes.py:53
 msgid "Uploaded your post."
 msgstr "Zamieszczono twój post."
 
-#: webapp/routes.py:75
+#: webapp/routes.py:78
 msgid "Invalid username or password"
 msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
 
-#: webapp/routes.py:109
+#: webapp/routes.py:112
 msgid "Password request send to that email address."
 msgstr "Prośba o reset została wysłana na ten adres email."
 
-#: webapp/routes.py:129
+#: webapp/routes.py:132
 msgid "Your password has been successfully reset."
 msgstr "Twoje hasło zostało pomyślnie zresetowane."
 
-#: webapp/routes.py:149
+#: webapp/routes.py:152
 msgid "Congrats! You can now log in."
 msgstr "Gratki! Morzesz się teraz zalogować."
 
-#: webapp/routes.py:182
+#: webapp/routes.py:185
 msgid "Succesfully updated profile."
 msgstr "Pomyślnie zaktualizowano twój profil."
 
-#: webapp/routes.py:198 webapp/routes.py:220
+#: webapp/routes.py:201 webapp/routes.py:223
 #, python-format
 msgid "User %(username)s not found."
 msgstr "Użytkownik %(username)s nie został znaleziony."
 
-#: webapp/routes.py:201
+#: webapp/routes.py:204
 msgid "You can't follow yourself!"
 msgstr "Nie możesz obserwować samego siebie!"
 
-#: webapp/routes.py:206
+#: webapp/routes.py:209
 #, python-format
 msgid "You are now following %(username)s."
 msgstr "Od teraz obserwujesz %(username)s."
 
-#: webapp/routes.py:223
+#: webapp/routes.py:226
 msgid "You can't unfollow yourself!"
 msgstr "Nie możesz przestać obserwować samego siebie!"
 
-#: webapp/routes.py:229
+#: webapp/routes.py:232
 #, python-format
 msgid "You stopped following %(username)s."
 msgstr "Przestałeś obserwować %(username)s"
 
-#: webapp/routes.py:232
+#: webapp/routes.py:235
 #, python-format
 msgid "You are not following %(username)s."
 msgstr "Nie obserwujesz %(username)s"
@@ -172,7 +172,7 @@ msgstr "Wyloguj"
 msgid "Profile page"
 msgstr "Strona profilowa"
 
-#: webapp/templates/edit_profile_page.html:4 webapp/templates/user_page.html:70
+#: webapp/templates/edit_profile_page.html:4 webapp/templates/user_page.html:56
 msgid "Edit your profile"
 msgstr "Zmień swój profil"
 
@@ -233,27 +233,27 @@ msgstr "Informacje kontaktowe:"
 msgid "Last seen on:"
 msgstr "Ostatnio widziano:"
 
-#: webapp/templates/user_page.html:30
+#: webapp/templates/user_page.html:26
 msgid "About:"
 msgstr "O niej/nim"
 
-#: webapp/templates/user_page.html:42
+#: webapp/templates/user_page.html:36
 msgid "Follow"
 msgstr "Obserwuj"
 
-#: webapp/templates/user_page.html:51
+#: webapp/templates/user_page.html:43
 msgid "Unfollow"
 msgstr "Przestań obserwować"
 
-#: webapp/templates/user_page.html:61
+#: webapp/templates/user_page.html:49
 msgid "Followers:"
 msgstr "Obserwujący:"
 
-#: webapp/templates/user_page.html:64
+#: webapp/templates/user_page.html:50
 msgid "Following:"
 msgstr "Obserwuje:"
 
-#: webapp/templates/user_page.html:76
+#: webapp/templates/user_page.html:62
 msgid "Posts"
 msgstr "Posty"
 
