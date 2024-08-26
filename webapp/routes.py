@@ -16,6 +16,10 @@ from webapp.models import User, Post
 from flask_babel import _, get_locale
 
 from datetime import datetime, timezone
+
+from webapp.translate import translate
+
+
 @app.before_request
 def before_request():
 
@@ -25,9 +29,7 @@ def before_request():
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
 
-@app.route('/bootstrap')
-def get_bootstrap():
-    return send_from_directory("templates/", "bootstrap.min.css")
+from langdetect import detect, LangDetectException
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index', methods=['POST', 'GET'])
@@ -47,7 +49,14 @@ def index_page():
         post_form = PostForm()
 
         if post_form.validate_on_submit():
-            new_post = Post(title=post_form.title.data, body=post_form.text.data, author=current_user)
+            try:
+                language = detect(post_form.text.data)
+            except LangDetectException:
+                language = ''
+
+            new_post = Post(title=post_form.title.data, body=post_form.text.data,
+                            author=current_user, language=language)
+
             db.session.add(new_post)
             db.session.commit()
             flash(_('Uploaded your post.'))
@@ -236,3 +245,12 @@ def unfollow_user(username):
             return redirect(url_for('user_page', username=username))
     else:
         return redirect(url_for('index_page'))
+
+@app.route('/translate', methods=['POST'])
+@login_required
+def translate_text():
+    data = request.get_json()
+    return {'text': translate(data['text'],
+                data['source_language'],
+                data['destination_language']
+            )}

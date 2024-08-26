@@ -14,3 +14,5 @@ class Config:
     ADMINS = ['admin@localhost']
     PASSWORD_RESET_EXPIRE_TIME_SECONDS = 5*60
     LANGUAGES = ['en', 'pl']
+    TRANSLATION_API_KEY = os.environ.get('TRANSLATION_API_KEY')
+    

@@ -4,7 +4,6 @@ import sqlalchemy as sqa
 import sqlalchemy.orm as sqo
 from webapp import db, login, app
 
-
 followers_table = sqa.Table('followers', db.metadata, 
                     sqa.Column('follower_id', sqa.Integer, sqa.ForeignKey('user.id'), primary_key=True), 
                     sqa.Column('followed_id', sqa.Integer, sqa.ForeignKey('user.id'), primary_key=True)
@@ -138,6 +137,7 @@ class Post(db.Model):
     timestamp:  sqo.Mapped[datetime] = sqo.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     title:      sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True)
     body:       sqo.Mapped[str] = sqo.mapped_column(sqa.String(4096))
+    language:   sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(8))
 
     author:     sqo.Mapped[User] = sqo.relationship(back_populates='posts')
 
