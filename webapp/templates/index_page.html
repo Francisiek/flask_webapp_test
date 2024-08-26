@@ -2,14 +2,14 @@
 
 {% block content %}
     {% if post_form %}
-    <h4>Write a post:</h4>
+    <h4>{{ _('Write a post:') }}</h4>
     <form action="" method="post" novalidate>
         {{ post_form.hidden_tag() }}
 
         {{ macro_form.form_field(post_form.title, size=64) }}
         {{ macro_form.form_field(post_form.text, size=64) }}
 
-        {{ macro_submit.submit_field(post_form.submit, value="Post it!") }}
+        {{ macro_submit.submit_field(post_form.submit) }}
     </form>
     {% endif %}
 
@@ -17,11 +17,6 @@
         {% include "sub_post.html" %}
     {% endfor %}
 
-    {% if prev_url %}
-        <a href="{{ prev_url }}">Previous page</a>
-    {% endif %}
-    {% if next_url %}
-        <a href="{{ next_url }}">Next page</a>
-    {% endif %}
+    {% include "sub_pagination.html" %}
     
 {% endblock %}

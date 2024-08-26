@@ -6,10 +6,13 @@
             </a>
         </td>
         <td>
-            <a href="{{ url_for('user_page', username=post.author.username) }}">
-                {{ post.author.username }}
-            </a>
-            wrote on {{ post.timestamp }}
+            {% set user_link %}
+                <a href="{{ url_for('user_page', username=post.author.username) }}">
+                    {{ post.author.username }}
+                </a>
+            {% endset %}
+            {{ _('%(username)s wrote %(when)s',
+                username=user_link, when=moment(post.timestamp).fromNow()) }}
             <br>
             {{ post.body }}
         </td>

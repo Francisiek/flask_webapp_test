@@ -1,5 +1,9 @@
-{% macro submit_field(field, value) %}
+{% macro submit_field(field, value=None) %}
 <div class="mb-3">
-    {{ field(class='btn btn-success', value=value) }}
+    {% if value != None %}
+        {{ field(class='btn btn-success', value=value) }}
+    {% else %}
+        {{ field(class='btn btn-success') }}
+    {% endif %}
 </div>
 {% endmacro %}

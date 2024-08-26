@@ -13,6 +13,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sqa
 from webapp.models import User, Post
 
+from flask_babel import _
 
 from datetime import datetime, timezone
 @app.before_request
@@ -46,7 +47,7 @@ def index_page():
             new_post = Post(title=post_form.title.data, body=post_form.text.data, author=current_user)
             db.session.add(new_post)
             db.session.commit()
-            flash('Uploaded your post.')
+            flash(_('Uploaded your post.'))
             return redirect(url_for('index_page'))
         
         query = current_user.get_my_and_followers_posts_query()
@@ -71,7 +72,7 @@ def login_page():
         user = db.session.scalar(sqa.select(User).where(form.username.data == User.username))
 
         if user == None or user.check_password(form.password.data) == False:
-            flash('Invalid username or password')
+            flash(_('Invalid username or password'))
             return redirect(url_for('login_page'))
         else:
             login_user(user, remember=form.remember_me.data)
@@ -105,7 +106,7 @@ def reset_password_request_page():
         if user:
             send_password_reset_email(user)
 
-        flash('Password request send to that email address.')
+        flash(_('Password request send to that email address.'))
         return redirect(url_for('login_page'))
 
     return render_template('reset_password_request_page.html', title='Reset password', form=form)
@@ -125,7 +126,7 @@ def reset_password_page(token):
     if form.validate_on_submit():
         user.set_password(form.password.data)
         db.session.commit()
-        flash('Your password has been successfully reset.')
+        flash(_('Your password has been successfully reset.'))
         return redirect(url_for('login_page'))
 
     return render_template('reset_password_page.html', title='Reset password', form=form)
@@ -145,7 +146,7 @@ def registration_page():
         db.session.add(new_user)
         db.session.commit() 
 
-        flash('Congrats! You can now log in.')
+        flash(_('Congrats! You can now log in.'))
         return redirect(url_for('login_page'))
 
     return render_template('registration_page.html', title='Register', form=form)
@@ -178,7 +179,7 @@ def edit_profile_page():
     if form.validate_on_submit():
         current_user.about = form.about.data
         db.session.commit()
-        flash('Succesfully updated profile.')
+        flash(_('Succesfully updated profile.'))
         return redirect(url_for('user_page', username=current_user.username))
     elif request.method == 'GET':
         form.about.data = current_user.about
@@ -194,15 +195,15 @@ def follow_user(username):
         user = db.session.scalar(sqa.select(User).where(User.username == username))
 
         if user is None:
-            flash(f'User {username} not found.')
+            flash(_('User %(username)s not found.', username=username))
             return redirect(url_for('index_page'))
         elif user == current_user:
-            flash(f'You can\'t follow yourself!')
+            flash(_('You can\'t follow yourself!'))
             return redirect(url_for('index_page'))
         
         current_user.follow(user)
         db.session.commit()
-        flash(f'You are now following {username}.')
+        flash(_('You are now following %(username)s.', username=username))
         return redirect(url_for('user_page', username=username))
     else:
         return redirect(url_for('index_page'))
@@ -216,19 +217,19 @@ def unfollow_user(username):
         user = db.session.scalar(sqa.select(User).where(User.username == username))
 
         if user is None:
-            flash(f'User {username} not found.')
+            flash(_('User %(username)s not found.', username=username))
             return redirect(url_for('index_page'))
         elif user == current_user:
-            flash(f'You can\'t unfollow yourself!')
+            flash(_('You can\'t unfollow yourself!'))
             return redirect(url_for('index_page'))
         
         if current_user.is_following(user):
             current_user.unfollow(user)
             db.session.commit()
-            flash(f'You stopped following {username}.')
+            flash(_('You stopped following %(username)s.', username=username))
             return redirect(url_for('user_page', username=username))
         else:
-            flash(f'You are not following {username}.')
+            flash(_('You are not following %(username)s.', username=username))
             return redirect(url_for('user_page', username=username))
     else:
         return redirect(url_for('index_page'))

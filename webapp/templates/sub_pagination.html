@@ -3,12 +3,12 @@
     <ul class="pagination">
         <li class="page-item{% if not prev_url %} disabled {% endif %}">
             <a class="page-link" href="{{ prev_url }}">
-                <span aria-hidden="true">&larr;</span>Previous page
+                <span aria-hidden="true">&larr;</span>{{ _('Previous page') }}
             </a>
         </li>
         <li class="page-item{% if not next_url %} disabled {% endif %}">
             <a class="page-link" href="{{ next_url }}">
-                Next page<span aria-hidden="true">&rarr;</span>
+                {{ _('Next page') }}<span aria-hidden="true">&rarr;</span>
             </a>
         </li>
     </ul>

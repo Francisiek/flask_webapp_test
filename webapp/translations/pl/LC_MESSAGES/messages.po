@@ -1,0 +1,259 @@
+# Polish translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-08-26 13:07+0200\n"
+"PO-Revision-Date: 2024-08-26 12:49+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pl\n"
+"Language-Team: pl <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: webapp/forms.py:9 webapp/forms.py:20 webapp/forms.py:48
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: webapp/forms.py:10 webapp/forms.py:22 webapp/forms.py:43
+msgid "Password"
+msgstr "Hasło"
+
+#: webapp/forms.py:11
+msgid "Remember me"
+msgstr "Zapamiętaj mnie"
+
+#: webapp/forms.py:12
+msgid "Sing in!!!"
+msgstr "Wloguj się!!!"
+
+#: webapp/forms.py:21 webapp/forms.py:39
+msgid "Email"
+msgstr "Email"
+
+#: webapp/forms.py:23 webapp/forms.py:44
+msgid "Repeat Password"
+msgstr "Powtórz hasło"
+
+#: webapp/forms.py:24
+msgid "Regiterrrtr!"
+msgstr "Zarejestutuutrj!"
+
+#: webapp/forms.py:30
+msgid "Username already taken"
+msgstr "Nazwa użytkownika zarezerwowawna"
+
+#: webapp/forms.py:36
+msgid "Email already registered"
+msgstr "Email został już zarejestrowany"
+
+#: webapp/forms.py:40
+msgid "Request a reset"
+msgstr "Poproś o reset"
+
+#: webapp/forms.py:45 webapp/templates/login_page.html:15
+msgid "Reset"
+msgstr "Reset"
+
+#: webapp/forms.py:49
+msgid "Search"
+msgstr "Szukaj"
+
+#: webapp/forms.py:55
+msgid "No such user"
+msgstr "Nie ma takiego użytkownika"
+
+#: webapp/forms.py:58
+msgid "About you"
+msgstr "O tobie"
+
+#: webapp/forms.py:59
+msgid "Update it"
+msgstr "Zaktualizuj"
+
+#: webapp/forms.py:62
+msgid "Submit"
+msgstr "Potwierdź"
+
+#: webapp/forms.py:65
+msgid "Title: "
+msgstr "Tytuł: "
+
+#: webapp/forms.py:66
+msgid "Write: "
+msgstr "Napisz: "
+
+#: webapp/forms.py:67
+msgid "Post it!"
+msgstr "Wrzuć to!"
+
+#: webapp/routes.py:50
+msgid "Uploaded your post."
+msgstr "Zamieszczono twój post."
+
+#: webapp/routes.py:75
+msgid "Invalid username or password"
+msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
+
+#: webapp/routes.py:109
+msgid "Password request send to that email address."
+msgstr "Prośba o reset została wysłana na ten adres email."
+
+#: webapp/routes.py:129
+msgid "Your password has been successfully reset."
+msgstr "Twoje hasło zostało pomyślnie zresetowane."
+
+#: webapp/routes.py:149
+msgid "Congrats! You can now log in."
+msgstr "Gratki! Morzesz się teraz zalogować."
+
+#: webapp/routes.py:182
+msgid "Succesfully updated profile."
+msgstr "Pomyślnie zaktualizowano twój profil."
+
+#: webapp/routes.py:198 webapp/routes.py:220
+#, python-format
+msgid "User %(username)s not found."
+msgstr "Użytkownik %(username)s nie został znaleziony."
+
+#: webapp/routes.py:201
+msgid "You can't follow yourself!"
+msgstr "Nie możesz obserwować samego siebie!"
+
+#: webapp/routes.py:206
+#, python-format
+msgid "You are now following %(username)s."
+msgstr "Od teraz obserwujesz %(username)s."
+
+#: webapp/routes.py:223
+msgid "You can't unfollow yourself!"
+msgstr "Nie możesz przestać obserwować samego siebie!"
+
+#: webapp/routes.py:229
+#, python-format
+msgid "You stopped following %(username)s."
+msgstr "Przestałeś obserwować %(username)s"
+
+#: webapp/routes.py:232
+#, python-format
+msgid "You are not following %(username)s."
+msgstr "Nie obserwujesz %(username)s"
+
+#: webapp/templates/base.html:24
+msgid "Home"
+msgstr "Dom"
+
+#: webapp/templates/base.html:32
+msgid "Login"
+msgstr "Zaloguj"
+
+#: webapp/templates/base.html:35 webapp/templates/registration_page.html:4
+msgid "Register"
+msgstr "Zarejestruj"
+
+#: webapp/templates/base.html:40
+#, python-format
+msgid "Hi <b>%(user)s</b>!"
+msgstr "Cześć <b>%(user)s</b>!"
+
+#: webapp/templates/base.html:44
+msgid "Logout"
+msgstr "Wyloguj"
+
+#: webapp/templates/base.html:48
+msgid "Profile page"
+msgstr "Strona profilowa"
+
+#: webapp/templates/edit_profile_page.html:4 webapp/templates/user_page.html:70
+msgid "Edit your profile"
+msgstr "Zmień swój profil"
+
+#: webapp/templates/error_404_page.html:5
+msgid "404 - page not found!"
+msgstr "404 - strona nie znaleziona!"
+
+#: webapp/templates/error_500_page.html:5
+msgid "500 - internal server error"
+msgstr "500 - błąd wewnętrzny serwera"
+
+#: webapp/templates/error_500_page.html:7
+msgid "Excuse me..."
+msgstr "Przepraszam..."
+
+#: webapp/templates/index_page.html:5
+msgid "Write a post:"
+msgstr "Napisz post:"
+
+#: webapp/templates/login_page.html:4
+msgid "Log IN"
+msgstr "ZalogUJ"
+
+#: webapp/templates/login_page.html:10
+msgid "Remember me:"
+msgstr "Zapamiętaj mnie:"
+
+#: webapp/templates/login_page.html:14
+msgid "Forgot your password?"
+msgstr "Zapomniałeś swojego hasła?"
+
+#: webapp/templates/reset_password_page.html:4
+msgid "Reset your password"
+msgstr "Zresetuj swoje hasło"
+
+#: webapp/templates/reset_password_request_page.html:4
+msgid "Reset password"
+msgstr "Zresetuj hasło"
+
+#: webapp/templates/sub_pagination.html:6
+msgid "Previous page"
+msgstr "Poprzednia strona"
+
+#: webapp/templates/sub_pagination.html:11
+msgid "Next page"
+msgstr "Następna strona"
+
+#: webapp/templates/sub_post.html:14
+#, python-format
+msgid "%(username)s wrote %(when)s"
+msgstr "%(username)s napisał/ała %(when)s"
+
+#: webapp/templates/user_page.html:15
+msgid "Contact info:"
+msgstr "Informacje kontaktowe:"
+
+#: webapp/templates/user_page.html:19
+msgid "Last seen on:"
+msgstr "Ostatnio widziano:"
+
+#: webapp/templates/user_page.html:30
+msgid "About:"
+msgstr "O niej/nim"
+
+#: webapp/templates/user_page.html:42
+msgid "Follow"
+msgstr "Obserwuj"
+
+#: webapp/templates/user_page.html:51
+msgid "Unfollow"
+msgstr "Przestań obserwować"
+
+#: webapp/templates/user_page.html:61
+msgid "Followers:"
+msgstr "Obserwujący:"
+
+#: webapp/templates/user_page.html:64
+msgid "Following:"
+msgstr "Obserwuje:"
+
+#: webapp/templates/user_page.html:76
+msgid "Posts"
+msgstr "Posty"
+

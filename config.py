@@ -13,3 +13,4 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['admin@localhost']
     PASSWORD_RESET_EXPIRE_TIME_SECONDS = 5*60
+    LANGUAGES = ['en', 'pl']
