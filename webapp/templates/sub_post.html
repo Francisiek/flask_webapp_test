@@ -14,6 +14,8 @@
             {{ _('%(username)s wrote %(when)s',
                 username=user_link, when=moment(post.timestamp).fromNow()) }}
             <br>
+            <b>{{ post.title }}</b>
+            <br>
             {{ post.body }}
         </td>
     </tr>

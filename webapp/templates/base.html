@@ -64,10 +64,11 @@
     </div>
     <div class="container-fluid m-0 px-3">
         <div class="container-fluid m-0 p-3 bg-light">
-        {% block content %} {% endblock %}
+            {% block content %} {% endblock %}
         </div>
     </div>
 
 {{ moment.include_moment() }}
+{{ moment.lang(g.locale) }}
 </body>
 </html>
