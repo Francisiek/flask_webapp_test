@@ -30,10 +30,10 @@
             <ul class="navbar-nav">
             {% if current_user.is_anonymous %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('login_page') }}">{{ _('Login') }}</a>
+                    <a class="nav-link" href="{{ url_for('auth.login_page') }}">{{ _('Login') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('registration_page') }}">{{ _('Register') }}</a>
+                    <a class="nav-link" href="{{ url_for('auth.registration_page') }}">{{ _('Register') }}</a>
                 </li>
             {% else %}
                 <li class="nav-item">
@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('logout_page') }}">{{ _('Logout') }}</a>
+                    <a class="nav-link" href="{{ url_for('auth.logout_page') }}">{{ _('Logout') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('user_page',
