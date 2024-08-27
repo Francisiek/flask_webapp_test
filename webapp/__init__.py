@@ -21,6 +21,9 @@ mail = Mail(app)
 moment = Moment(app)
 babel = Babel(app, locale_selector=get_locale)
 
+from webapp.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
 import os
@@ -52,4 +55,4 @@ if not app.debug:
         mail_handler.setLevel(logging.INFO)
         app.logger.addHandler(mail_handler)
 
-from webapp import routes, models, errors
+from webapp import routes, models
