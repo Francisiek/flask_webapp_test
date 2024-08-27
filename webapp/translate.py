@@ -1,15 +1,13 @@
+from flask import current_app
 import requests
 from flask_babel import _, lazy_gettext as _l
-from urllib3 import request
-
-from webapp import app
 
 def translate(text, source_language, destination_language):
-    if app.config.get('TRANSLATION_API_KEY', None) is None:
+    if current_app.config.get('TRANSLATION_API_KEY', None) is None:
         return _l('Error: the translation service is not configured.')
 
     auth = {
-        'api_key': app.config['TRANSLATION_API_KEY'],
+        'api_key': current_app.config['TRANSLATION_API_KEY'],
         'region': 'mideu'
     }
 

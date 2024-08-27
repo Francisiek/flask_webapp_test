@@ -1,6 +1,4 @@
 from webapp.auth import bp
-from webapp import db
-import sqlalchemy as sqa
 
 from flask import render_template, url_for, flash, redirect, request
 from flask_login import current_user, login_user, logout_user
@@ -8,12 +6,12 @@ from flask_babel import _
 from urllib.parse import urlsplit
 
 from webapp.auth.forms import *
-from webapp.models import User
+from webapp.main.models import User
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login_page():
     if current_user.is_authenticated:
-        return redirect(url_for('index_page'))
+        return redirect(url_for('main.index_page'))
 
     form = LoginForm()
     if form.validate_on_submit():
@@ -27,7 +25,7 @@ def login_page():
             next_page = request.args.get('next')
 
             if not next_page or urlsplit(next_page).netloc != '':
-                next_page = url_for('index_page')
+                next_page = url_for('main.index_page')
 
             return redirect(next_page)
 
@@ -36,13 +34,13 @@ def login_page():
 @bp.route('/logout')
 def logout_page():
     logout_user()
-    return redirect(url_for('index_page'))
+    return redirect(url_for('main.index_page'))
 
 from webapp.auth.email import send_password_reset_email
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request_page():
     if current_user.is_authenticated:
-        return redirect(url_for('index_page'))
+        return redirect(url_for('main.index_page'))
 
     form = PasswordResetRequestForm()
 
@@ -61,12 +59,12 @@ def reset_password_request_page():
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password_page(token):
     if current_user.is_authenticated:
-        return redirect(url_for('index_page'))
+        return redirect(url_for('main.index_page'))
 
     user = User.verify_password_reset_token(token)
 
     if not user:
-        return redirect(url_for('index_page'))
+        return redirect(url_for('main.index_page'))
 
     form = PasswordResetForm()
 
@@ -82,7 +80,7 @@ def reset_password_page(token):
 @bp.route('/registration', methods=['GET', 'POST'])
 def registration_page():
     if current_user.is_authenticated:
-        return redirect(url_for('index_page'))
+        return redirect(url_for('main.index_page'))
 
     form = RegistrationForm()
 

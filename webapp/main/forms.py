@@ -5,7 +5,7 @@ from wtforms.validators import ValidationError, Length
 from flask_babel import lazy_gettext as _l
 
 from webapp import db
-from webapp.models import User
+from webapp.main.models import User
 import sqlalchemy as sqa
 
 class SearchUserForm(FlaskForm):

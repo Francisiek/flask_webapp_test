@@ -1,21 +1,20 @@
+from flask import current_app
+from flask_login import UserMixin
 from typing import Optional
 from datetime import datetime, timezone
 import sqlalchemy as sqa
 import sqlalchemy.orm as sqo
-from webapp import db, login, app
+from werkzeug.security import generate_password_hash, check_password_hash
+from hashlib import md5
+from time import time
+import jwt
+
+from webapp import db, login
 
 followers_table = sqa.Table('followers', db.metadata, 
                     sqa.Column('follower_id', sqa.Integer, sqa.ForeignKey('user.id'), primary_key=True), 
                     sqa.Column('followed_id', sqa.Integer, sqa.ForeignKey('user.id'), primary_key=True)
             )
-
-
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-from hashlib import md5
-
-from time import time
-import jwt
 
 class User(UserMixin, db.Model):
     id:         sqo.Mapped[int] = sqo.mapped_column(primary_key=True)
@@ -43,17 +42,20 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.hashed_pass, password)
 
-    def get_reset_password_token(self, expires_in=app.config['PASSWORD_RESET_EXPIRE_TIME_SECONDS']):
+    def get_reset_password_token(self, expires_in=None):
+        if expires_in is None:
+            expires_in = current_app._get_current_object().config['PASSWORD_RESET_EXPIRE_TIME_SECONDS']
+
         token = jwt.encode(
             {'user_id': self.id, 'exp': time() + expires_in},
-            app.config['SECRET_KEY'], algorithm='HS256'
+            current_app.config['SECRET_KEY'], algorithm='HS256'
         )
         return token
 
     @staticmethod
     def verify_password_reset_token(token):
         try:
-            user_id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['user_id']
+            user_id = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=['HS256'])['user_id']
         except:
             return None
 

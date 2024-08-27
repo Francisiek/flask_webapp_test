@@ -28,23 +28,25 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div class="col">
-            {% if not current_user.is_following(user) %}
-            <form action="{{ url_for('follow_user', username=user.username) }}"
-                method="post">
-                    {{ form.hidden_tag() }}
-                    {% set value %}{{ _('Follow') }}{% endset %}
-                    {{ macro_submit.submit_field(form.submit, value=value) }}
-            </form>
-            {% else %}
-            <form action="{{ url_for('unfollow_user', username=user.username) }}"
-                method="post">
-                    {{ form.hidden_tag() }}
-                    {% set value %}{{ _('Unfollow') }}{% endset %}
-                    {{ macro_submit.submit_field(form.submit, value=value) }}
-            </form>
-            {% endif %}
-        </div>
+        {% if current_user != user %}
+            <div class="col">
+                {% if not current_user.is_following(user) %}
+                <form action="{{ url_for('main.follow_user', username=user.username) }}"
+                    method="post">
+                        {{ form.hidden_tag() }}
+                        {% set value %}{{ _('Follow') }}{% endset %}
+                        {{ macro_submit.submit_field(form.submit, value=value) }}
+                </form>
+                {% else %}
+                <form action="{{ url_for('main.unfollow_user', username=user.username) }}"
+                    method="post">
+                        {{ form.hidden_tag() }}
+                        {% set value %}{{ _('Unfollow') }}{% endset %}
+                        {{ macro_submit.submit_field(form.submit, value=value) }}
+                </form>
+                {% endif %}
+            </div>
+        {% endif %}
         <div class="col">
             <b>{{ _('Followers:') }}</b> {{ user.followers_counter() }}
             <b>{{ _('Following:') }}</b> {{ user.following_counter() }}
@@ -53,7 +55,7 @@
     <div class="row">
         <div class="col">
             {% if user == current_user %}
-                <a href="{{ url_for('edit_profile_page') }}">{{ _('Edit your profile') }}</a>
+                <a href="{{ url_for('main.edit_profile_page') }}">{{ _('Edit your profile') }}</a>
             {% endif %}
         </div>
     </div>

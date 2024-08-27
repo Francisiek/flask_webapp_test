@@ -22,7 +22,7 @@
             <span class="navbar-brand h1">Bloggg</span>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('index_page') }}">{{ _('Home') }}</a>
+                    <a class="nav-link" href="{{ url_for('main.index_page') }}">{{ _('Home') }}</a>
                 </li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('user_page', username=current_user.username) }}">
+                    <a class="nav-link" href="{{ url_for('main.user_page', username=current_user.username) }}">
                         {{ _('Hi <b>%(user)s</b>!', user=current_user.username) }}
                     </a>
                 </li>
@@ -45,7 +45,7 @@
                     <a class="nav-link" href="{{ url_for('auth.logout_page') }}">{{ _('Logout') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('user_page',
+                    <a class="nav-link" href="{{ url_for('main.user_page',
                         username=current_user.username) }}">{{ _('Profile page') }}</a>
                 </li>
             {% endif %}

@@ -1,8 +1,9 @@
 import sqlalchemy as sqa
 import sqlalchemy.orm as sqo
-from webapp import app, db, cli
-from webapp.models import User, Post
+from webapp import create_app, db
+from webapp.main.models import User, Post
 
+app = create_app()
 
 @app.shell_context_processor
 def shell_context():
