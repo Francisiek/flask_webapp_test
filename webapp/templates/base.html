@@ -72,7 +72,7 @@
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
     <script>
-        async function translate(source_element, destination_element, source_language, destination_language) {
+        async function translate(source_element, destination_element, source_language_, destination_language_) {
             document.getElementById(destination_element).innerHTML =
                 '<img src="{{ url_for('static', filename='loading.gif') }}">';
             const response = await fetch('/translate', {
@@ -80,10 +80,10 @@
                 headers: {'Content-Type': 'application/json; charset=utf-8'},
                 body: JSON.stringify({
                     text: document.getElementById(source_element).innerText,
-                    source_language: source_language,
-                    destination_language: destination_language
+                    source_language: source_language_,
+                    destination_language: destination_language_
                 })
-            })
+            });
             const data = await response.json();
             document.getElementById(destination_element).innerText = data.text;
         }

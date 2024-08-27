@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-26 14:26+0200\n"
+"POT-Creation-Date: 2024-08-27 20:32+0200\n"
 "PO-Revision-Date: 2024-08-26 12:49+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -18,6 +18,10 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
+
+#: webapp/__init__.py:19
+msgid "Please log in to access that resource."
+msgstr "Proszę się zalogować w celu dostępu do tego zasobu."
 
 #: webapp/forms.py:9 webapp/forms.py:20 webapp/forms.py:48
 msgid "Username"
@@ -95,80 +99,93 @@ msgstr "Napisz: "
 msgid "Post it!"
 msgstr "Wrzuć to!"
 
-#: webapp/routes.py:53
+#: webapp/routes.py:61
 msgid "Uploaded your post."
 msgstr "Zamieszczono twój post."
 
-#: webapp/routes.py:78
+#: webapp/routes.py:86
 msgid "Invalid username or password"
 msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
 
-#: webapp/routes.py:112
+#: webapp/routes.py:120
 msgid "Password request send to that email address."
 msgstr "Prośba o reset została wysłana na ten adres email."
 
-#: webapp/routes.py:132
+#: webapp/routes.py:140
 msgid "Your password has been successfully reset."
 msgstr "Twoje hasło zostało pomyślnie zresetowane."
 
-#: webapp/routes.py:152
+#: webapp/routes.py:160
 msgid "Congrats! You can now log in."
 msgstr "Gratki! Morzesz się teraz zalogować."
 
-#: webapp/routes.py:185
+#: webapp/routes.py:193
 msgid "Succesfully updated profile."
 msgstr "Pomyślnie zaktualizowano twój profil."
 
-#: webapp/routes.py:201 webapp/routes.py:223
+#: webapp/routes.py:209 webapp/routes.py:231
 #, python-format
 msgid "User %(username)s not found."
 msgstr "Użytkownik %(username)s nie został znaleziony."
 
-#: webapp/routes.py:204
+#: webapp/routes.py:212
 msgid "You can't follow yourself!"
 msgstr "Nie możesz obserwować samego siebie!"
 
-#: webapp/routes.py:209
+#: webapp/routes.py:217
 #, python-format
 msgid "You are now following %(username)s."
 msgstr "Od teraz obserwujesz %(username)s."
 
-#: webapp/routes.py:226
+#: webapp/routes.py:234
 msgid "You can't unfollow yourself!"
 msgstr "Nie możesz przestać obserwować samego siebie!"
 
-#: webapp/routes.py:232
+#: webapp/routes.py:240
 #, python-format
 msgid "You stopped following %(username)s."
 msgstr "Przestałeś obserwować %(username)s"
 
-#: webapp/routes.py:235
+#: webapp/routes.py:243
 #, python-format
 msgid "You are not following %(username)s."
 msgstr "Nie obserwujesz %(username)s"
 
-#: webapp/templates/base.html:24
+#: webapp/routes.py:259
+msgid "You need to log in in order to translate."
+msgstr "Musisz się zalogować, żeby uzyskać dostęp do tego zasobu."
+
+#: webapp/translate.py:9
+#, fuzzy
+msgid "Error: the translation service is not configured."
+msgstr "Błąd: usługa tłumacza nie jest skonfigurowana."
+
+#: webapp/translate.py:22
+msgid "Error: the translation service failed."
+msgstr "Błąd: usługa tłumacza zawiodła."
+
+#: webapp/templates/base.html:25
 msgid "Home"
 msgstr "Dom"
 
-#: webapp/templates/base.html:32
+#: webapp/templates/base.html:33
 msgid "Login"
 msgstr "Zaloguj"
 
-#: webapp/templates/base.html:35 webapp/templates/registration_page.html:4
+#: webapp/templates/base.html:36 webapp/templates/registration_page.html:4
 msgid "Register"
 msgstr "Zarejestruj"
 
-#: webapp/templates/base.html:40
+#: webapp/templates/base.html:41
 #, python-format
 msgid "Hi <b>%(user)s</b>!"
 msgstr "Cześć <b>%(user)s</b>!"
 
-#: webapp/templates/base.html:44
+#: webapp/templates/base.html:45
 msgid "Logout"
 msgstr "Wyloguj"
 
-#: webapp/templates/base.html:48
+#: webapp/templates/base.html:49
 msgid "Profile page"
 msgstr "Strona profilowa"
 
@@ -224,6 +241,10 @@ msgstr "Następna strona"
 #, python-format
 msgid "%(username)s wrote %(when)s"
 msgstr "%(username)s napisał/ała %(when)s"
+
+#: webapp/templates/sub_post.html:27
+msgid "Translate"
+msgstr "Przetłumacz"
 
 #: webapp/templates/user_page.html:15
 msgid "Contact info:"

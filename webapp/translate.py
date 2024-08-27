@@ -1,12 +1,12 @@
 import requests
-from flask_babel import _
+from flask_babel import _, lazy_gettext as _l
 from urllib3 import request
 
 from webapp import app
 
 def translate(text, source_language, destination_language):
     if app.config.get('TRANSLATION_API_KEY', None) is None:
-        return _('Error: the translation service is not configuted.')
+        return _l('Error: the translation service is not configured.')
 
     auth = {
         'api_key': app.config['TRANSLATION_API_KEY'],
@@ -19,6 +19,6 @@ def translate(text, source_language, destination_language):
     )
 
     if api_request.status_code != 200:
-        return _('Error: the translation service failed.')
+        return _l('Error: the translation service failed.')
 
     return api_request.json()[0]['translations'][0]['text']

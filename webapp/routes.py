@@ -22,7 +22,6 @@ from webapp.translate import translate
 
 @app.before_request
 def before_request():
-
     g.locale = str(get_locale())
 
     if current_user.is_authenticated:
@@ -246,11 +245,15 @@ def unfollow_user(username):
     else:
         return redirect(url_for('index_page'))
 
+from webapp.translate import translate
+
 @app.route('/translate', methods=['POST'])
-@login_required
 def translate_text():
-    data = request.get_json()
-    return {'text': translate(data['text'],
-                data['source_language'],
-                data['destination_language']
-            )}
+    if current_user.is_authenticated:
+        data = request.get_json()
+        return {'text': translate(data['text'],
+                    data['source_language'],
+                    data['destination_language']
+                )}
+    else:
+        return {'text': _('You need to log in in order to translate.')}
