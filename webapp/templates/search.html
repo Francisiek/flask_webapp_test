@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>{{ _('Search results') }}</h4>
+{% for post in posts %}
+        {% include "sub_post.html" %}
+    {% endfor %}
+
+    {% include "sub_pagination.html" %}
+{% endblock %}

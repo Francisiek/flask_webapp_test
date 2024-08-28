@@ -1,23 +1,26 @@
 from flask_wtf import FlaskForm
+from urllib3 import request
 from wtforms import StringField, SubmitField, TextAreaField
-from wtforms.validators import ValidationError, Length
+from wtforms.validators import ValidationError, Length, DataRequired
 
 from flask_babel import lazy_gettext as _l
+from flask import request
 
 from webapp import db
 from webapp.models import User
 import sqlalchemy as sqa
 
-class SearchUserForm(FlaskForm):
-    username = StringField(_l('Username'))
-    submit = SubmitField(_l('Search'))
+class SearchForm(FlaskForm):
+    query = StringField(_l('Search'), validators=[DataRequired()])
 
-    def validate_username(self, username):
-        search = db.session.scalar(sqa.select(User).where(username.data == User.username))
-        
-        if not search:
-            raise ValidationError(_l('No such user'))
-        
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'meta' not in kwargs:
+            kwargs['meta'] = {'csrf': False}
+
+        super(SearchForm, self).__init__(*args, **kwargs)
+
 class EditProfileForm(FlaskForm):
     about = TextAreaField(_l('About you'), validators=[Length(min=0, max=4095)])
     submit = SubmitField(_l('Update it'))

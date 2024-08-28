@@ -24,6 +24,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('main.index_page') }}">{{ _('Home') }}</a>
                 </li>
+                {% if g.search_form %}
+                    <li class="nav-item">
+                        <p class="navbar-text me-2">{{ _('Search') }}</p>
+                    </li>
+                    <li class="nav-item">
+                        <form class="navbar-form navbar-left" method="get"
+                            action="{{ url_for('main.search_page') }}">
+                                {{ g.search_form.query(size=32, class='form-control',
+                                    placeholder=g.search_form.query.label.text) }}
+                        </form>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <div style="d-flex">
@@ -37,9 +49,7 @@
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.user_page', username=current_user.username) }}">
-                        {{ _('Hi <b>%(user)s</b>!', user=current_user.username) }}
-                    </a>
+                    <p class="navbar-text">{{ _('Hi <b>%(user)s</b>!', user=current_user.username) }}</p>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout_page') }}">{{ _('Logout') }}</a>

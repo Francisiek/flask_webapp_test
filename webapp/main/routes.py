@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import sqlalchemy as sqa
 
 from webapp import db
-from webapp.main.forms import EmptyForm, PostForm, EditProfileForm
+from webapp.main.forms import EmptyForm, PostForm, EditProfileForm, SearchForm
 from webapp.models import User, Post
 from webapp.main import bp
 
@@ -17,8 +17,27 @@ def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
+        g.search_form = SearchForm()
 
 from langdetect import detect, LangDetectException
+
+@bp.route('/search')
+@login_required
+def search_page():
+    if not g.search_form.validate():
+        return redirect(url_for('main.index_page'))
+    posts_per_page = current_app.config['POSTS_PER_PAGE']
+
+    page = request.args.get('page', 1, type=int)
+    posts, total = Post.search(g.search_form.query.data, page, posts_per_page)
+
+    next_url = url_for('main.search', q=g.search_form.query.data, page=page + 1) \
+        if total > page * posts_per_page else None
+    prev_url = url_for('main.search', q=g.search_form.query.data, page=page - 1) \
+        if page > 1 else None
+
+    return render_template('search.html', title=_('Search'), posts=posts,
+                           prev_url=prev_url, next_url=next_url)
 
 @bp.route('/', methods=['POST', 'GET'])
 @bp.route('/index', methods=['POST', 'GET'])

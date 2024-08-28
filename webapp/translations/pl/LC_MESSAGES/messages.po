@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-27 20:32+0200\n"
+"POT-Creation-Date: 2024-08-29 00:55+0200\n"
 "PO-Revision-Date: 2024-08-26 12:49+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,215 +19,185 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.16.0\n"
 
-#: webapp/__init__.py:19
+#: webapp/__init__.py:22
 msgid "Please log in to access that resource."
 msgstr "Proszę się zalogować w celu dostępu do tego zasobu."
 
-#: webapp/forms.py:9 webapp/forms.py:20 webapp/forms.py:48
-msgid "Username"
-msgstr "Nazwa użytkownika"
-
-#: webapp/forms.py:10 webapp/forms.py:22 webapp/forms.py:43
-msgid "Password"
-msgstr "Hasło"
-
-#: webapp/forms.py:11
-msgid "Remember me"
-msgstr "Zapamiętaj mnie"
-
-#: webapp/forms.py:12
-msgid "Sing in!!!"
-msgstr "Wloguj się!!!"
-
-#: webapp/forms.py:21 webapp/forms.py:39
-msgid "Email"
-msgstr "Email"
-
-#: webapp/forms.py:23 webapp/forms.py:44
-msgid "Repeat Password"
-msgstr "Powtórz hasło"
-
-#: webapp/forms.py:24
-msgid "Regiterrrtr!"
-msgstr "Zarejestutuutrj!"
-
-#: webapp/forms.py:30
-msgid "Username already taken"
-msgstr "Nazwa użytkownika zarezerwowawna"
-
-#: webapp/forms.py:36
-msgid "Email already registered"
-msgstr "Email został już zarejestrowany"
-
-#: webapp/forms.py:40
-msgid "Request a reset"
-msgstr "Poproś o reset"
-
-#: webapp/forms.py:45 webapp/templates/login_page.html:15
-msgid "Reset"
-msgstr "Reset"
-
-#: webapp/forms.py:49
-msgid "Search"
-msgstr "Szukaj"
-
-#: webapp/forms.py:55
-msgid "No such user"
-msgstr "Nie ma takiego użytkownika"
-
-#: webapp/forms.py:58
-msgid "About you"
-msgstr "O tobie"
-
-#: webapp/forms.py:59
-msgid "Update it"
-msgstr "Zaktualizuj"
-
-#: webapp/forms.py:62
-msgid "Submit"
-msgstr "Potwierdź"
-
-#: webapp/forms.py:65
-msgid "Title: "
-msgstr "Tytuł: "
-
-#: webapp/forms.py:66
-msgid "Write: "
-msgstr "Napisz: "
-
-#: webapp/forms.py:67
-msgid "Post it!"
-msgstr "Wrzuć to!"
-
-#: webapp/routes.py:61
-msgid "Uploaded your post."
-msgstr "Zamieszczono twój post."
-
-#: webapp/routes.py:86
-msgid "Invalid username or password"
-msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
-
-#: webapp/routes.py:120
-msgid "Password request send to that email address."
-msgstr "Prośba o reset została wysłana na ten adres email."
-
-#: webapp/routes.py:140
-msgid "Your password has been successfully reset."
-msgstr "Twoje hasło zostało pomyślnie zresetowane."
-
-#: webapp/routes.py:160
-msgid "Congrats! You can now log in."
-msgstr "Gratki! Morzesz się teraz zalogować."
-
-#: webapp/routes.py:193
-msgid "Succesfully updated profile."
-msgstr "Pomyślnie zaktualizowano twój profil."
-
-#: webapp/routes.py:209 webapp/routes.py:231
-#, python-format
-msgid "User %(username)s not found."
-msgstr "Użytkownik %(username)s nie został znaleziony."
-
-#: webapp/routes.py:212
-msgid "You can't follow yourself!"
-msgstr "Nie możesz obserwować samego siebie!"
-
-#: webapp/routes.py:217
-#, python-format
-msgid "You are now following %(username)s."
-msgstr "Od teraz obserwujesz %(username)s."
-
-#: webapp/routes.py:234
-msgid "You can't unfollow yourself!"
-msgstr "Nie możesz przestać obserwować samego siebie!"
-
-#: webapp/routes.py:240
-#, python-format
-msgid "You stopped following %(username)s."
-msgstr "Przestałeś obserwować %(username)s"
-
-#: webapp/routes.py:243
-#, python-format
-msgid "You are not following %(username)s."
-msgstr "Nie obserwujesz %(username)s"
-
-#: webapp/routes.py:259
-msgid "You need to log in in order to translate."
-msgstr "Musisz się zalogować, żeby uzyskać dostęp do tego zasobu."
-
-#: webapp/translate.py:9
+#: webapp/translate.py:7
 #, fuzzy
 msgid "Error: the translation service is not configured."
 msgstr "Błąd: usługa tłumacza nie jest skonfigurowana."
 
-#: webapp/translate.py:22
+#: webapp/translate.py:20
 msgid "Error: the translation service failed."
 msgstr "Błąd: usługa tłumacza zawiodła."
+
+#: webapp/auth/forms.py:11 webapp/auth/forms.py:17
+msgid "Username"
+msgstr "Nazwa użytkownika"
+
+#: webapp/auth/forms.py:12 webapp/auth/forms.py:19 webapp/auth/forms.py:40
+msgid "Password"
+msgstr "Hasło"
+
+#: webapp/auth/forms.py:13
+msgid "Remember me"
+msgstr "Zapamiętaj mnie"
+
+#: webapp/auth/forms.py:14
+msgid "Sing in!!!"
+msgstr "Wloguj się!!!"
+
+#: webapp/auth/forms.py:18 webapp/auth/forms.py:36
+msgid "Email"
+msgstr "Email"
+
+#: webapp/auth/forms.py:20 webapp/auth/forms.py:41
+msgid "Repeat Password"
+msgstr "Powtórz hasło"
+
+#: webapp/auth/forms.py:21
+msgid "Regiterrrtr!"
+msgstr "Zarejestutuutrj!"
+
+#: webapp/auth/forms.py:27
+msgid "Username already taken"
+msgstr "Nazwa użytkownika zarezerwowawna"
+
+#: webapp/auth/forms.py:33
+msgid "Email already registered"
+msgstr "Email został już zarejestrowany"
+
+#: webapp/auth/forms.py:37
+msgid "Request a reset"
+msgstr "Poproś o reset"
+
+#: webapp/auth/forms.py:42 webapp/templates/auth/login_page.html:15
+msgid "Reset"
+msgstr "Reset"
+
+#: webapp/auth/routes.py:21
+msgid "Invalid username or password"
+msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
+
+#: webapp/auth/routes.py:54
+msgid "Password request send to that email address."
+msgstr "Prośba o reset została wysłana na ten adres email."
+
+#: webapp/auth/routes.py:74
+msgid "Your password has been successfully reset."
+msgstr "Twoje hasło zostało pomyślnie zresetowane."
+
+#: webapp/auth/routes.py:94
+msgid "Congrats! You can now log in."
+msgstr "Gratki! Morzesz się teraz zalogować."
+
+#: webapp/main/forms.py:14 webapp/main/routes.py:39
+#: webapp/templates/base.html:29
+msgid "Search"
+msgstr "Szukaj"
+
+#: webapp/main/forms.py:25
+msgid "About you"
+msgstr "O tobie"
+
+#: webapp/main/forms.py:26
+msgid "Update it"
+msgstr "Zaktualizuj"
+
+#: webapp/main/forms.py:29
+msgid "Submit"
+msgstr "Potwierdź"
+
+#: webapp/main/forms.py:32
+msgid "Title: "
+msgstr "Tytuł: "
+
+#: webapp/main/forms.py:33
+msgid "Write: "
+msgstr "Napisz: "
+
+#: webapp/main/forms.py:34
+msgid "Post it!"
+msgstr "Wrzuć to!"
+
+#: webapp/main/routes.py:70
+msgid "Uploaded your post."
+msgstr "Zamieszczono twój post."
+
+#: webapp/main/routes.py:113
+msgid "Succesfully updated profile."
+msgstr "Pomyślnie zaktualizowano twój profil."
+
+#: webapp/main/routes.py:129 webapp/main/routes.py:151
+#, python-format
+msgid "User %(username)s not found."
+msgstr "Użytkownik %(username)s nie został znaleziony."
+
+#: webapp/main/routes.py:132
+msgid "You can't follow yourself!"
+msgstr "Nie możesz obserwować samego siebie!"
+
+#: webapp/main/routes.py:137
+#, python-format
+msgid "You are now following %(username)s."
+msgstr "Od teraz obserwujesz %(username)s."
+
+#: webapp/main/routes.py:154
+msgid "You can't unfollow yourself!"
+msgstr "Nie możesz przestać obserwować samego siebie!"
+
+#: webapp/main/routes.py:160
+#, python-format
+msgid "You stopped following %(username)s."
+msgstr "Przestałeś obserwować %(username)s"
+
+#: webapp/main/routes.py:163
+#, python-format
+msgid "You are not following %(username)s."
+msgstr "Nie obserwujesz %(username)s"
+
+#: webapp/main/routes.py:179
+msgid "You need to log in in order to translate."
+msgstr "Musisz się zalogować, żeby uzyskać dostęp do tego zasobu."
 
 #: webapp/templates/base.html:25
 msgid "Home"
 msgstr "Dom"
 
-#: webapp/templates/base.html:33
+#: webapp/templates/base.html:45
 msgid "Login"
 msgstr "Zaloguj"
 
-#: webapp/templates/base.html:36 webapp/templates/registration_page.html:4
+#: webapp/templates/auth/registration_page.html:4 webapp/templates/base.html:48
 msgid "Register"
 msgstr "Zarejestruj"
 
-#: webapp/templates/base.html:41
+#: webapp/templates/base.html:52
 #, python-format
 msgid "Hi <b>%(user)s</b>!"
 msgstr "Cześć <b>%(user)s</b>!"
 
-#: webapp/templates/base.html:45
+#: webapp/templates/base.html:55
 msgid "Logout"
 msgstr "Wyloguj"
 
-#: webapp/templates/base.html:49
+#: webapp/templates/base.html:59
 msgid "Profile page"
 msgstr "Strona profilowa"
 
-#: webapp/templates/edit_profile_page.html:4 webapp/templates/user_page.html:56
+#: webapp/templates/edit_profile_page.html:4 webapp/templates/user_page.html:58
 msgid "Edit your profile"
 msgstr "Zmień swój profil"
-
-#: webapp/templates/error_404_page.html:5
-msgid "404 - page not found!"
-msgstr "404 - strona nie znaleziona!"
-
-#: webapp/templates/error_500_page.html:5
-msgid "500 - internal server error"
-msgstr "500 - błąd wewnętrzny serwera"
-
-#: webapp/templates/error_500_page.html:7
-msgid "Excuse me..."
-msgstr "Przepraszam..."
 
 #: webapp/templates/index_page.html:5
 msgid "Write a post:"
 msgstr "Napisz post:"
 
-#: webapp/templates/login_page.html:4
-msgid "Log IN"
-msgstr "ZalogUJ"
-
-#: webapp/templates/login_page.html:10
-msgid "Remember me:"
-msgstr "Zapamiętaj mnie:"
-
-#: webapp/templates/login_page.html:14
-msgid "Forgot your password?"
-msgstr "Zapomniałeś swojego hasła?"
-
-#: webapp/templates/reset_password_page.html:4
-msgid "Reset your password"
-msgstr "Zresetuj swoje hasło"
-
-#: webapp/templates/reset_password_request_page.html:4
-msgid "Reset password"
-msgstr "Zresetuj hasło"
+#: webapp/templates/search.html:4
+#, fuzzy
+msgid "Search results"
+msgstr "Wyniki wyszukiwania"
 
 #: webapp/templates/sub_pagination.html:6
 msgid "Previous page"
@@ -258,23 +228,83 @@ msgstr "Ostatnio widziano:"
 msgid "About:"
 msgstr "O niej/nim"
 
-#: webapp/templates/user_page.html:36
+#: webapp/templates/user_page.html:37
 msgid "Follow"
 msgstr "Obserwuj"
 
-#: webapp/templates/user_page.html:43
+#: webapp/templates/user_page.html:44
 msgid "Unfollow"
 msgstr "Przestań obserwować"
 
-#: webapp/templates/user_page.html:49
+#: webapp/templates/user_page.html:51
 msgid "Followers:"
 msgstr "Obserwujący:"
 
-#: webapp/templates/user_page.html:50
+#: webapp/templates/user_page.html:52
 msgid "Following:"
 msgstr "Obserwuje:"
 
-#: webapp/templates/user_page.html:62
+#: webapp/templates/user_page.html:64
 msgid "Posts"
 msgstr "Posty"
+
+#: webapp/templates/auth/login_page.html:4
+msgid "Log IN"
+msgstr "ZalogUJ"
+
+#: webapp/templates/auth/login_page.html:10
+msgid "Remember me:"
+msgstr "Zapamiętaj mnie:"
+
+#: webapp/templates/auth/login_page.html:14
+msgid "Forgot your password?"
+msgstr "Zapomniałeś swojego hasła?"
+
+#: webapp/templates/auth/reset_password_page.html:4
+msgid "Reset your password"
+msgstr "Zresetuj swoje hasło"
+
+#: webapp/templates/auth/reset_password_request_page.html:4
+msgid "Reset password"
+msgstr "Zresetuj hasło"
+
+#: webapp/templates/email/reset_password.html:4
+#: webapp/templates/email/reset_password.txt:1
+#, python-format
+msgid "Dear %(user)s,"
+msgstr "Droga/Drogi %(user)s,"
+
+#: webapp/templates/email/reset_password.html:5
+#: webapp/templates/email/reset_password.txt:2
+msgid "in order to reset your password please click the following link:"
+msgstr "w celu zresetowania hasła proszę kliknąć w poniższy link:"
+
+#: webapp/templates/email/reset_password.html:6
+#, fuzzy
+msgid "RESET PASSWORD"
+msgstr "Zresetuj hasło"
+
+#: webapp/templates/email/reset_password.html:7
+msgid "or put this link into your browser:"
+msgstr "albo wsadź go do swojej przeglądarki:"
+
+#: webapp/templates/email/reset_password.html:9
+#: webapp/templates/email/reset_password.txt:5
+msgid "-Blog automat"
+msgstr "-Automat Blogu"
+
+#: webapp/templates/errors/404.html:5
+msgid "404 - page not found!"
+msgstr "404 - strona nie znaleziona!"
+
+#: webapp/templates/errors/500.html:5
+msgid "500 - internal server error"
+msgstr "500 - błąd wewnętrzny serwera"
+
+#: webapp/templates/errors/500.html:7
+msgid "Excuse me..."
+msgstr "Przepraszam..."
+
+#~ msgid "No such user"
+#~ msgstr "Nie ma takiego użytkownika"
 
