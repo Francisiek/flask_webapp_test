@@ -10,6 +10,7 @@ from config import Config
 import logging
 from logging.handlers import RotatingFileHandler, SMTPHandler
 import os
+from elasticsearch import Elasticsearch
 
 def get_locale():
     return request.accept_languages.best_match(current_app.config['LANGUAGES'])
@@ -46,6 +47,9 @@ def create_app(config_class=Config):
     from webapp.cli import bp as cli_bp
     app.register_blueprint(cli_bp)
 
+    app.search_engine = Elasticsearch([app.config['SEARCH_URL']]) \
+        if app.config['SEARCH_URL'] else None
+
     if not app.debug:
         if not os.path.exists('logs'):
             os.mkdir('logs')
@@ -75,4 +79,4 @@ def create_app(config_class=Config):
 
     return app
 
-from webapp.main import routes, models
+from webapp import models

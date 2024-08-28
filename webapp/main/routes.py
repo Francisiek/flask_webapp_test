@@ -7,7 +7,7 @@ import sqlalchemy as sqa
 
 from webapp import db
 from webapp.main.forms import EmptyForm, PostForm, EditProfileForm
-from webapp.main.models import User, Post
+from webapp.models import User, Post
 from webapp.main import bp
 
 @bp.before_request

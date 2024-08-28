@@ -17,6 +17,7 @@ followers_table = sqa.Table('followers', db.metadata,
             )
 
 class User(UserMixin, db.Model):
+    __searchable = ['username']
     id:         sqo.Mapped[int] = sqo.mapped_column(primary_key=True)
     username:   sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True, unique=True)
     email:      sqo.Mapped[str] = sqo.mapped_column(sqa.String(128), index=True, unique=True)
@@ -44,7 +45,7 @@ class User(UserMixin, db.Model):
 
     def get_reset_password_token(self, expires_in=None):
         if expires_in is None:
-            expires_in = current_app._get_current_object().config['PASSWORD_RESET_EXPIRE_TIME_SECONDS']
+            expires_in = current_app.config['PASSWORD_RESET_EXPIRE_TIME_SECONDS']
 
         token = jwt.encode(
             {'user_id': self.id, 'exp': time() + expires_in},
@@ -134,6 +135,7 @@ def load_user(id):
     return db.session.get(User, int(id))
 
 class Post(db.Model):
+    __searchable__ = ['title', 'body']
     id:         sqo.Mapped[int] = sqo.mapped_column(primary_key=True)
     user_id:    sqo.Mapped[int] = sqo.mapped_column(sqa.ForeignKey(User.id), index=True)
     timestamp:  sqo.Mapped[datetime] = sqo.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))

@@ -4,7 +4,7 @@ os.environ['DATABASE_URL'] = 'sqlite://'
 import unittest
 from webapp import create_app, db
 from config import Config
-from webapp.main.models import User, Post
+from webapp.models import User, Post
 
 class TestConfig(Config):
     TESTING = 1

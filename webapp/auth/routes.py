@@ -6,7 +6,7 @@ from flask_babel import _
 from urllib.parse import urlsplit
 
 from webapp.auth.forms import *
-from webapp.main.models import User
+from webapp.models import User
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login_page():

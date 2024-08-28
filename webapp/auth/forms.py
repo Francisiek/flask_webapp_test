@@ -5,7 +5,7 @@ from flask_babel import lazy_gettext as _l
 import sqlalchemy as sqa
 
 from webapp import db
-from webapp.main.models import User
+from webapp.models import User
 
 class LoginForm(FlaskForm):
     username = StringField(_l('Username'), validators=[DataRequired()])
