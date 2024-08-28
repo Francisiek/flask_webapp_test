@@ -43,6 +43,9 @@ def create_app(config_class=Config):
     from webapp.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from webapp.cli import bp as cli_bp
+    app.register_blueprint(cli_bp)
+
     if not app.debug:
         if not os.path.exists('logs'):
             os.mkdir('logs')
