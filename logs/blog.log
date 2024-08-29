@@ -1,0 +1,45 @@
+2024-08-21 17:12:07,475 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:12:20,982 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:13:31,569 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:13:38,840 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:14:35,186 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:16:17,622 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:19:57,546 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-21 17:22:12,288 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-23 16:56:07,673 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-23 16:57:07,698 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:28
+2024-08-27 23:04:42,811 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:54
+2024-08-27 23:04:47,557 ERROR:
+ Exception on /auth/reset_password_request [POST] in /home/franc/code/python/flask/flask_venv/lib/python3.11/site-packages/flask/app.py:838
+Traceback (most recent call last):
+  File "/home/franc/code/python/flask/flask_venv/lib/python3.11/site-packages/flask/app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/franc/code/python/flask/flask_venv/lib/python3.11/site-packages/flask/app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/franc/code/python/flask/flask_venv/lib/python3.11/site-packages/flask/app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/franc/code/python/flask/flask_venv/lib/python3.11/site-packages/flask/app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/franc/code/python/flask/webapp/auth/routes.py", line 52, in reset_password_request_page
+    send_password_reset_email(user)
+  File "/home/franc/code/python/flask/webapp/auth/email.py", line 9, in send_password_reset_email
+    send_email('Blog: Password Reset', 'password_reset@'+current_app.config['MAIL_SERVER'],
+                                       ~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "NoneType") to str
+2024-08-27 23:06:53,895 INFO:
+ Starting up... in /home/franc/code/python/flask/webapp/__init__.py:54
