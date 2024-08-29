@@ -5,3 +5,6 @@ migrations/__pycache__
 .idea
 elasticsearch
 run_elasticsearch
+venv
+logs
+
