@@ -6,3 +6,5 @@ migrations/__pycache__
 elasticsearch
 run_elasticsearch
 flask_venv
+logs
+dbs
