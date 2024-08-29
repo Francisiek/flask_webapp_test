@@ -69,7 +69,7 @@ class User(UserMixin, db.Model):
     username:   sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True, unique=True)
     email:      sqo.Mapped[str] = sqo.mapped_column(sqa.String(128), index=True, unique=True)
     hashed_pass:sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(256))
-    about:      sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(4096))
+    about:      sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(3072))
     last_seen:  sqo.Mapped[Optional[datetime]] = sqo.mapped_column(default=lambda: datetime.now(timezone.utc))
     
     posts:      sqo.WriteOnlyMapped['Post'] = sqo.relationship(back_populates='author')
@@ -187,7 +187,7 @@ class Post(SearchableMixin, db.Model):
     user_id:    sqo.Mapped[int] = sqo.mapped_column(sqa.ForeignKey(User.id), index=True)
     timestamp:  sqo.Mapped[datetime] = sqo.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     title:      sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True)
-    body:       sqo.Mapped[str] = sqo.mapped_column(sqa.String(4096))
+    body:       sqo.Mapped[str] = sqo.mapped_column(sqa.String(3072))
     language:   sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(8))
 
     author:     sqo.Mapped[User] = sqo.relationship(back_populates='posts')
