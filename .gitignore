@@ -5,4 +5,4 @@ migrations/__pycache__
 .idea
 elasticsearch
 run_elasticsearch
-flask_venv
+venv
