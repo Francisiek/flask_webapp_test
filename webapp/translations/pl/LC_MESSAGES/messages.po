@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-08-29 00:55+0200\n"
+"POT-Creation-Date: 2024-09-02 00:46+0200\n"
 "PO-Revision-Date: 2024-08-26 12:49+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -24,7 +24,6 @@ msgid "Please log in to access that resource."
 msgstr "Proszę się zalogować w celu dostępu do tego zasobu."
 
 #: webapp/translate.py:7
-#, fuzzy
 msgid "Error: the translation service is not configured."
 msgstr "Błąd: usługa tłumacza nie jest skonfigurowana."
 
@@ -64,10 +63,6 @@ msgstr "Zarejestutuutrj!"
 msgid "Username already taken"
 msgstr "Nazwa użytkownika zarezerwowawna"
 
-#: webapp/auth/forms.py:33
-msgid "Email already registered"
-msgstr "Email został już zarejestrowany"
-
 #: webapp/auth/forms.py:37
 msgid "Request a reset"
 msgstr "Poproś o reset"
@@ -76,24 +71,52 @@ msgstr "Poproś o reset"
 msgid "Reset"
 msgstr "Reset"
 
-#: webapp/auth/routes.py:21
+#: webapp/auth/forms.py:45
+#, fuzzy
+msgid "Type your password"
+msgstr "Zresetuj swoje hasło"
+
+#: webapp/auth/forms.py:46
+#, fuzzy
+msgid "Are your sure?"
+msgstr "Zresetuj swoje hasło"
+
+#: webapp/auth/forms.py:47
+#, fuzzy
+msgid "DELETE"
+msgstr "Usuń post"
+
+#: webapp/auth/routes.py:23
 msgid "Invalid username or password"
 msgstr "Nieprawidłowa nazwa użytkownika albo hasło"
 
-#: webapp/auth/routes.py:54
+#: webapp/auth/routes.py:56
 msgid "Password request send to that email address."
 msgstr "Prośba o reset została wysłana na ten adres email."
 
-#: webapp/auth/routes.py:74
+#: webapp/auth/routes.py:76
 msgid "Your password has been successfully reset."
 msgstr "Twoje hasło zostało pomyślnie zresetowane."
 
-#: webapp/auth/routes.py:94
+#: webapp/auth/routes.py:96
 msgid "Congrats! You can now log in."
 msgstr "Gratki! Morzesz się teraz zalogować."
 
-#: webapp/main/forms.py:14 webapp/main/routes.py:39
-#: webapp/templates/base.html:29
+#: webapp/auth/routes.py:109
+#, fuzzy
+msgid "Wrong password!"
+msgstr "Hasło"
+
+#: webapp/auth/routes.py:113
+msgid "You are not sure!?"
+msgstr "Nie masz pewności!?"
+
+#: webapp/auth/routes.py:118
+msgid "Account successfully deleted."
+msgstr "Konto pomyślnie usunięte."
+
+#: webapp/main/forms.py:14 webapp/main/routes.py:48
+#: webapp/templates/base.html:30
 msgid "Search"
 msgstr "Szukaj"
 
@@ -121,68 +144,77 @@ msgstr "Napisz: "
 msgid "Post it!"
 msgstr "Wrzuć to!"
 
-#: webapp/main/routes.py:70
+#: webapp/main/routes.py:79
 msgid "Uploaded your post."
 msgstr "Zamieszczono twój post."
 
-#: webapp/main/routes.py:113
+#: webapp/main/routes.py:106
+#, fuzzy
+msgid "Deleted that post."
+msgstr "Usuń post"
+
+#: webapp/main/routes.py:108
+msgid "This post doesn't exists."
+msgstr "Ten post nie istnieje."
+
+#: webapp/main/routes.py:139
 msgid "Succesfully updated profile."
 msgstr "Pomyślnie zaktualizowano twój profil."
 
-#: webapp/main/routes.py:129 webapp/main/routes.py:151
+#: webapp/main/routes.py:155 webapp/main/routes.py:177
 #, python-format
 msgid "User %(username)s not found."
 msgstr "Użytkownik %(username)s nie został znaleziony."
 
-#: webapp/main/routes.py:132
+#: webapp/main/routes.py:158
 msgid "You can't follow yourself!"
 msgstr "Nie możesz obserwować samego siebie!"
 
-#: webapp/main/routes.py:137
+#: webapp/main/routes.py:163
 #, python-format
 msgid "You are now following %(username)s."
 msgstr "Od teraz obserwujesz %(username)s."
 
-#: webapp/main/routes.py:154
+#: webapp/main/routes.py:180
 msgid "You can't unfollow yourself!"
 msgstr "Nie możesz przestać obserwować samego siebie!"
 
-#: webapp/main/routes.py:160
+#: webapp/main/routes.py:186
 #, python-format
 msgid "You stopped following %(username)s."
 msgstr "Przestałeś obserwować %(username)s"
 
-#: webapp/main/routes.py:163
+#: webapp/main/routes.py:189
 #, python-format
 msgid "You are not following %(username)s."
 msgstr "Nie obserwujesz %(username)s"
 
-#: webapp/main/routes.py:179
+#: webapp/main/routes.py:205
 msgid "You need to log in in order to translate."
 msgstr "Musisz się zalogować, żeby uzyskać dostęp do tego zasobu."
 
-#: webapp/templates/base.html:25
+#: webapp/templates/base.html:26
 msgid "Home"
 msgstr "Dom"
 
-#: webapp/templates/base.html:45
+#: webapp/templates/base.html:46
 msgid "Login"
 msgstr "Zaloguj"
 
-#: webapp/templates/auth/registration_page.html:4 webapp/templates/base.html:48
+#: webapp/templates/auth/registration_page.html:4 webapp/templates/base.html:49
 msgid "Register"
 msgstr "Zarejestruj"
 
-#: webapp/templates/base.html:52
+#: webapp/templates/base.html:53
 #, python-format
 msgid "Hi <b>%(user)s</b>!"
 msgstr "Cześć <b>%(user)s</b>!"
 
-#: webapp/templates/base.html:55
+#: webapp/templates/base.html:56
 msgid "Logout"
 msgstr "Wyloguj"
 
-#: webapp/templates/base.html:59
+#: webapp/templates/base.html:60
 msgid "Profile page"
 msgstr "Strona profilowa"
 
@@ -195,7 +227,6 @@ msgid "Write a post:"
 msgstr "Napisz post:"
 
 #: webapp/templates/search.html:4
-#, fuzzy
 msgid "Search results"
 msgstr "Wyniki wyszukiwania"
 
@@ -212,7 +243,11 @@ msgstr "Następna strona"
 msgid "%(username)s wrote %(when)s"
 msgstr "%(username)s napisał/ała %(when)s"
 
-#: webapp/templates/sub_post.html:27
+#: webapp/templates/sub_post.html:25
+msgid "Delete post"
+msgstr "Usuń post"
+
+#: webapp/templates/sub_post.html:34
 msgid "Translate"
 msgstr "Przetłumacz"
 
@@ -244,17 +279,19 @@ msgstr "Obserwujący:"
 msgid "Following:"
 msgstr "Obserwuje:"
 
-#: webapp/templates/user_page.html:64
+#: webapp/templates/auth/delete_account_page.html:4
+#: webapp/templates/user_page.html:63
+#, fuzzy
+msgid "Delete your account"
+msgstr "Usuń post"
+
+#: webapp/templates/user_page.html:69
 msgid "Posts"
 msgstr "Posty"
 
 #: webapp/templates/auth/login_page.html:4
 msgid "Log IN"
 msgstr "ZalogUJ"
-
-#: webapp/templates/auth/login_page.html:10
-msgid "Remember me:"
-msgstr "Zapamiętaj mnie:"
 
 #: webapp/templates/auth/login_page.html:14
 msgid "Forgot your password?"
@@ -307,4 +344,10 @@ msgstr "Przepraszam..."
 
 #~ msgid "No such user"
 #~ msgstr "Nie ma takiego użytkownika"
+
+#~ msgid "Email already registered"
+#~ msgstr "Email został już zarejestrowany"
+
+#~ msgid "Remember me:"
+#~ msgstr "Zapamiętaj mnie:"
 

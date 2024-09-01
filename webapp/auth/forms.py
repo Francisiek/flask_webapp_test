@@ -26,11 +26,11 @@ class RegistrationForm(FlaskForm):
         if search:
             raise ValidationError(_l('Username already taken'))
 
-    def validate_email(self, email):
-        search = db.session.scalar(sqa.select(User).where(email.data == User.email))
-
-        if search:
-            raise ValidationError(_l('Email already registered'))
+    # def validate_email(self, email):
+    #     search = db.session.scalar(sqa.select(User).where(email.data == User.email))
+    #
+    #     if search:
+    #         raise ValidationError(_l('Email already registered'))
 
 class PasswordResetRequestForm(FlaskForm):
     email = StringField(_l('Email'), validators=[DataRequired(), Email()])
@@ -41,3 +41,7 @@ class PasswordResetForm(FlaskForm):
     password2 = PasswordField(_l('Repeat Password'), validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField(_l('Reset'))
 
+class DeleteAccountForm(FlaskForm):
+    password = PasswordField(_l('Type your password'), validators=[DataRequired()])
+    sure = BooleanField(_l('Are your sure?'))
+    submit = SubmitField(_l('DELETE'))

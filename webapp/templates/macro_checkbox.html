@@ -1,0 +1,6 @@
+{% macro checkbox(field) %}
+<div class="mb-3">
+    {{ field.label }}
+    {{ field() }}
+</div>
+{% endmacro %}

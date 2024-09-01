@@ -1,3 +1,5 @@
+from crypt import methods
+
 from webapp.auth import bp
 
 from flask import render_template, url_for, flash, redirect, request
@@ -27,7 +29,7 @@ def login_page():
             if not next_page or urlsplit(next_page).netloc != '':
                 next_page = url_for('main.index_page')
 
-            return redirect(next_page)
+        return redirect(next_page)
 
     return render_template('auth/login_page.html', title='Login', form=form)
 
@@ -96,3 +98,24 @@ def registration_page():
 
     return render_template('auth/registration_page.html', title='Register', form=form)
 
+@bp.route('/delete_account', methods=['GET', 'POST'])
+def delete_account_page():
+    if not current_user.is_authenticated:
+        return redirect('main.index_page')
+
+    form = DeleteAccountForm()
+    if form.validate_on_submit():
+        if not current_user.check_password(form.password.data):
+            flash(_('Wrong password!'))
+            return redirect(url_for('auth.delete_account_page'))
+
+        if form.sure.data == False:
+            flash(_('You are not sure!?'))
+            return redirect(url_for('auth.delete_account_page'))
+
+        current_user.remove_user()
+        db.session.commit()
+        flash(_('Account successfully deleted.'))
+        return redirect(url_for('main.index_page'))
+
+    return render_template('auth/delete_account_page.html', title='Delete account', form=form)

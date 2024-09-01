@@ -17,8 +17,15 @@
             <b>{{ post.title }}</b>
             <br>
             <span id="post-{{ post.id }}">{{ post.body }}</span>
+            <br>
+            {% if post.author == current_user %}
+                <form action=
+                "{{ url_for('main.delete_post', post_id=post.id, next=g.current_path_and_args) }}"
+                method="post">
+                    <input class="btn btn-danger" type="submit" value="{{ _('Delete post') }}">
+                </form>
+            {% endif %}
             {% if post.language and post.language != g.locale %}
-                <br>
                 <span id="translation-{{ post.id }}">
                     <a href="javascript:translate(
                         'post-{{ post.id }}',

@@ -1,9 +1,11 @@
+from crypt import methods
 
 from flask import render_template, url_for, flash, redirect, request, g, current_app
 from flask_login import current_user, login_required
 from flask_babel import _, get_locale
 from datetime import datetime, timezone
 import sqlalchemy as sqa
+from urllib.parse import urlsplit, urlparse, urlunparse
 
 from webapp import db
 from webapp.main.forms import EmptyForm, PostForm, EditProfileForm, SearchForm
@@ -13,6 +15,13 @@ from webapp.main import bp
 @bp.before_request
 def before_request():
     g.locale = str(get_locale())
+
+    url = urlparse(request.url)
+    url = url._replace(scheme='')
+    url = url._replace(netloc='')
+    url = urlunparse(url)
+
+    g.current_path_and_args = url
 
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
@@ -81,6 +90,23 @@ def index_page():
 
     return render_template('index_page.html', title='Home page', 
                     posts=posts, post_form=post_form, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/delete_post/<post_id>', methods=['POST'])
+def delete_post(post_id):
+    post = db.session.get(Post, post_id)
+
+    next_page = request.args.get('next')
+
+    if not next_page or urlsplit(next_page).netloc != '':
+        next_page = url_for('main.index_page')
+
+    if post and current_user == post.author:
+        post.remove_post()
+        db.session.commit()
+        flash(_('Deleted that post.'))
+    else:
+        flash(_('This post doesn\'t exists.'))
+    return redirect(next_page)
 
 @bp.route('/user/<username>')
 @login_required

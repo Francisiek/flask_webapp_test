@@ -58,6 +58,11 @@
                 <a href="{{ url_for('main.edit_profile_page') }}">{{ _('Edit your profile') }}</a>
             {% endif %}
         </div>
+        <div class="col">
+            {% if user == current_user %}
+                <a href="{{ url_for('auth.delete_account_page') }}">{{ _('Delete your account') }}</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 

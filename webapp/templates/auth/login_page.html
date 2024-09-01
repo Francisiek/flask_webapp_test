@@ -7,7 +7,7 @@
 
     {{ macro_form.form_field(form.username) }}
     {{ macro_form.form_field(form.password) }}
-    {{ _('Remember me:') }} {{ macro_submit.submit_field(form.remember_me) }}
+    {{ macro_checkbox.checkbox(form.remember_me) }}
     {{ macro_submit.submit_field(form.submit) }}
 
     <p>

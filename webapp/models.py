@@ -19,7 +19,7 @@ followers_table = sqa.Table('followers', db.metadata,
 class SearchableMixin(object):
     @classmethod
     def search(cls, expression, page, per_page):
-        ids, total = query_index(cls.__tablename__, expression, page, per_page)
+        ids, total = query_index(cls.__class__, expression, page, per_page)
 
         if total == 0:
             return [], 0
@@ -46,25 +46,25 @@ class SearchableMixin(object):
     def after_commit(cls, session):
         for obj in session._changes['add']:
             if isinstance(obj, SearchableMixin):
-                add_to_index(obj.__tablename__, obj)
+                add_to_index(obj.__class__, obj)
         for obj in session._changes['update']:
             if isinstance(obj, SearchableMixin):
-                add_to_index(obj.__tablename__, obj)
+                add_to_index(obj.__class__, obj)
         for obj in session._changes['delete']:
             if isinstance(obj, SearchableMixin):
-                remove_from_index(cls.__tablename__, obj)
+                remove_from_index(obj.__class__, obj)
         session._changes = None
 
     @classmethod
     def reindex(cls):
         for obj in db.session.scalars(sqa.select(cls)):
-            add_to_index(cls.__tablename__, obj)
+            add_to_index(obj.__class__, obj)
 
 db.event.listen(db.session, 'before_commit', SearchableMixin.before_commit)
 db.event.listen(db.session, 'after_commit', SearchableMixin.after_commit)
 
 class User(UserMixin, db.Model):
-    __searchable = ['username']
+    __searchable__ = ['username']
     id:         sqo.Mapped[int] = sqo.mapped_column(primary_key=True)
     username:   sqo.Mapped[str] = sqo.mapped_column(sqa.String(64), index=True, unique=True)
     email:      sqo.Mapped[str] = sqo.mapped_column(sqa.String(128), index=True, unique=True)
@@ -72,16 +72,18 @@ class User(UserMixin, db.Model):
     about:      sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(3072))
     last_seen:  sqo.Mapped[Optional[datetime]] = sqo.mapped_column(default=lambda: datetime.now(timezone.utc))
     
-    posts:      sqo.WriteOnlyMapped['Post'] = sqo.relationship(back_populates='author')
+    posts:      sqo.WriteOnlyMapped['Post'] = sqo.relationship(back_populates='author', passive_deletes=True)
 
     followers:  sqo.WriteOnlyMapped['User'] = sqo.relationship(
         secondary=followers_table, primaryjoin=(followers_table.c.followed_id == id),
-        secondaryjoin=(followers_table.c.follower_id == id), back_populates='following' 
+        secondaryjoin=(followers_table.c.follower_id == id), back_populates='following',
+        passive_deletes=True
     )
 
     following:   sqo.WriteOnlyMapped['User'] = sqo.relationship(
         secondary=followers_table, primaryjoin=(followers_table.c.follower_id == id),
-        secondaryjoin=(followers_table.c.followed_id == id), back_populates='followers'
+        secondaryjoin=(followers_table.c.followed_id == id), back_populates='followers',
+        passive_deletes=True
     )
 
     def set_password(self, password):
@@ -109,6 +111,11 @@ class User(UserMixin, db.Model):
 
         return db.session.get(User, user_id)
 
+    def remove_user(self):
+        for post in self.get_posts():
+            post.remove_post()
+
+        db.session.delete(self)
 
     def avatar(self, size):
         hash = md5((self.username+self.email+str(2384129234)).encode('utf-8')).hexdigest()
@@ -192,5 +199,8 @@ class Post(SearchableMixin, db.Model):
 
     author:     sqo.Mapped[User] = sqo.relationship(back_populates='posts')
 
+    def remove_post(self):
+        db.session.delete(self)
+
     def __repr__(self):
-        return f'<Post {self.title} by {self.user_id}'
+        return f'<Post {self.title} by {self.user_id}>'
