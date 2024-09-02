@@ -27,7 +27,7 @@ def update():
     os.remove('text.pot')
 
 @translate.command()
-def compile():
+def compile_lang():
     """
     Compile all languages.
     """
