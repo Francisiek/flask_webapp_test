@@ -1,5 +1,3 @@
-from crypt import methods
-
 from webapp.auth import bp
 
 from flask import render_template, url_for, flash, redirect, request
@@ -21,6 +19,9 @@ def login_page():
 
         if user is None or user.check_password(form.password.data) == False:
             flash(_('Invalid username or password'))
+            return redirect(url_for('auth.login_page'))
+        elif user.activated == False:
+            flash(_('First activate your account.'))
             return redirect(url_for('auth.login_page'))
         else:
             login_user(user, remember=form.remember_me.data)
@@ -50,8 +51,11 @@ def reset_password_request_page():
         user = db.session.scalar(
             sqa.select(User).where(User.email == form.email.data)
         )
-        if user:
+        if user.activated == True:
             send_password_reset_email(user)
+        else:
+            flash(_('First activate your account.'))
+            return redirect(url_for('auth.login_page'))
 
         flash(_('Password request send to that email address.'))
         return redirect(url_for('auth.login_page'))
@@ -78,7 +82,7 @@ def reset_password_page(token):
 
     return render_template('auth/reset_password_page.html', title='Reset password', form=form)
 
-
+from webapp.auth.email import send_activate_account_email
 @bp.route('/registration', methods=['GET', 'POST'])
 def registration_page():
     if current_user.is_authenticated:
@@ -87,16 +91,36 @@ def registration_page():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        new_user = User(username=form.username.data, email=form.email.data)
+        new_user = User(username=form.username.data, email=form.email.data, activated=False)
         new_user.set_password(form.password.data)
 
         db.session.add(new_user)
         db.session.commit()
 
-        flash(_('Congrats! You can now log in.'))
+        send_activate_account_email(new_user)
+        flash(_('Congrats! Please check your email and activate your account.'))
         return redirect(url_for('auth.login_page'))
 
     return render_template('auth/registration_page.html', title='Register', form=form)
+
+@bp.route('/activate_account/<token>', methods=['GET', 'POST'])
+def activate_account(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index_page'))
+
+    if not token:
+        return redirect(url_for('main.index_page'))
+
+    user = User.verify_password_reset_token(token)
+
+    if not user:
+        flash(_('Invalid activation token'))
+        return redirect(url_for('main.index_page'))
+
+    user.activated = True
+    flash(_('You can now log in.'))
+    return redirect(url_for('auth.login_page'))
+
 
 @bp.route('/delete_account', methods=['GET', 'POST'])
 def delete_account_page():

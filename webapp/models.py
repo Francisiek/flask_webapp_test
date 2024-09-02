@@ -10,6 +10,7 @@ from time import time
 import jwt
 
 from webapp import db, login
+from webapp.auth.routes import activate_account
 from webapp.search import query_index, add_to_index, remove_from_index
 
 followers_table = sqa.Table('followers', db.metadata, 
@@ -71,7 +72,7 @@ class User(UserMixin, db.Model):
     hashed_pass:sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(256))
     about:      sqo.Mapped[Optional[str]] = sqo.mapped_column(sqa.String(3072))
     last_seen:  sqo.Mapped[Optional[datetime]] = sqo.mapped_column(default=lambda: datetime.now(timezone.utc))
-    
+    activated:  sqo.Mapped[bool] = sqo.mapped_column(sqa.Boolean(), index=True)
     posts:      sqo.WriteOnlyMapped['Post'] = sqo.relationship(back_populates='author', passive_deletes=True)
 
     followers:  sqo.WriteOnlyMapped['User'] = sqo.relationship(
@@ -116,6 +117,12 @@ class User(UserMixin, db.Model):
             post.remove_post()
 
         db.session.delete(self)
+
+    @staticmethod
+    def delete_inactiveted_accounts():
+        inactiveted_users = db.session.scalars(sqa.select(User).where(User.activated == False)).all()
+        for user in inactiveted_users:
+            db.session.delete(user)
 
     def avatar(self, size):
         hash = md5((self.username+self.email+str(2384129234)).encode('utf-8')).hexdigest()

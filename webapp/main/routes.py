@@ -111,7 +111,7 @@ def delete_post(post_id):
 @bp.route('/user/<username>')
 @login_required
 def user_page(username):
-    user = db.first_or_404(sqa.select(User).where(username == User.username))
+    user = db.first_or_404(sqa.select(User).where(sqa.and_(User.username == username, User.activated == True)))
 
     form = EmptyForm()
 

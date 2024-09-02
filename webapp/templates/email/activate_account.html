@@ -1,0 +1,11 @@
+<!doctype html>
+<html>
+<body>
+    <p><h2>{{ _('Dear %(user)s,', user=user.username) }}</h2>,</p>
+    <p>{{ _('in order to activate your account click the following link:') }}</p>
+    <a href="{{ url_for('auth.activate_account', token=token, _external=True) }}">{{ _('RESET PASSWORD') }}</a>
+    <p>{{ _('or put this link into your browser:') }} </p>
+    <p>{{ url_for('auth.activate_account', token=token, _external=True) }}</p>
+    <b>{{ _('-Blog automat') }}</b>
+</body>
+</html>

@@ -2,7 +2,7 @@ FROM python:slim
 
 COPY packages_list packages_list
 RUN pip install -r packages_list
-RUN pip install gunicorn
+RUN pip install gunicorn pymysql cryptography
 
 COPY webapp webapp
 COPY migrations migrations

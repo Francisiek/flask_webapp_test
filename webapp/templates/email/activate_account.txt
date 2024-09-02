@@ -1,0 +1,5 @@
+{{ _('Dear %(user)s,', user=user.username) }}
+{{ _('in order to activate your account click the following link:') }}
+{{ url_for('auth.activate_account', token=token, _external=True) }}
+
+{{ _('-Blog automat') }}
