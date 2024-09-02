@@ -118,6 +118,7 @@ def activate_account(token):
         return redirect(url_for('main.index_page'))
 
     user.activated = True
+    db.session.commit()
     flash(_('You can now log in.'))
     return redirect(url_for('auth.login_page'))
 

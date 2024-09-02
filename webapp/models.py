@@ -10,7 +10,6 @@ from time import time
 import jwt
 
 from webapp import db, login
-from webapp.auth.routes import activate_account
 from webapp.search import query_index, add_to_index, remove_from_index
 
 followers_table = sqa.Table('followers', db.metadata, 

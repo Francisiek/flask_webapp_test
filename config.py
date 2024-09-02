@@ -23,3 +23,4 @@ class Config:
     LANGUAGES = ['en', 'pl']
     TRANSLATION_API_KEY = os.environ.get('TRANSLATION_API_KEY')
     SEARCH_URL = os.environ.get('SEARCH_URL')
+    CLEANUP_TIME_MINUTES = 30
