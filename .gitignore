@@ -6,4 +6,3 @@ venv
 .idea
 run_*
 *__pycache__*
-
