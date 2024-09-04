@@ -7,3 +7,4 @@ venv
 run_*
 *__pycache__*
 
+migrations_old
