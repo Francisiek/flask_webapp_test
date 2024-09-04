@@ -1,7 +1,13 @@
 #!/bin/bash
 
 mkdir dbs
-flask db upgrade
-SECRET_KEY=$(python3 -c "from random import randint; print(hex(randint(2**64, 10**72)))")
+while True; do
+	flask db upgrade
+	if [[ "$?" == "0" ]]; then
+		break
+	fi
+	echo "Upragde command failed, retrying in 5 seconds..."
+	sleep 5
+done
 
 exec gunicorn -b :5000 --access-logfile - --error-logfile - blog:app

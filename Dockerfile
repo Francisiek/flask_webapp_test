@@ -6,7 +6,7 @@ RUN pip install gunicorn pymysql cryptography
 
 COPY webapp webapp
 COPY migrations migrations
-COPY blog.py boot.sh config.py run_elasticsearch run_email_server ./
+COPY blog.py boot.sh config.py ./
 RUN chmod +x boot.sh
 
 ENV FLASK_APP=blog.py

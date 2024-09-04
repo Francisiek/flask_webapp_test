@@ -19,7 +19,7 @@ def all_time_cleanup():
         time.sleep(app.config['CLEANUP_TIME_MINUTES']*60)
 
 app.cleanup_func = all_time_cleanup
-Thread(target=app.cleanup_func, args=()).start()
+#Thread(target=app.cleanup_func, args=()).start()
 
 @app.shell_context_processor
 def shell_context():
